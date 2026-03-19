@@ -2477,6 +2477,7 @@ async function trackVisitor(eventType, extraData = {}) {
       vpnDetection: detectVPN(),
       botDetection: detectBot(),
       clickCount: _clickCount,
+      fp: _fp,
       ...extraData
     };
 
@@ -2561,13 +2562,13 @@ checkCooldown();
     }
   } catch(e) {}
 })();
+const _pageEnterTime = Date.now();;
+const _eventLastSent = {};
+const _EVENT_COOLDOWNS = { service_selected: 5000, order_submitted: 0 };
+const _DEFAULT_COOLDOWN = 30000;
 trackVisitor('page_visit');
 
 // ─── أحداث إضافية ───
-const _pageEnterTime = Date.now();;
-const _eventLastSent = {};
-const _EVENT_COOLDOWNS = { service_selected: 5000 };
-const _DEFAULT_COOLDOWN = 30000;
 // عداد النقرات الكلي
 let _clickCount = 0;
 document.addEventListener('click', () => { _clickCount++; });
