@@ -2386,17 +2386,6 @@ async function trackVisitor(eventType, extraData = {}) {
       } catch(e) { return '—'; }
     };
 
-    const getWebGLFingerprint = () => {
-      try {
-        const c = document.createElement('canvas');
-        const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
-        if (!gl) return '—';
-        const dbg = gl.getExtension('WEBGL_debug_renderer_info');
-        const vendor   = dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL)   : gl.getParameter(gl.VENDOR);
-        const renderer = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
-        return `${vendor} | ${renderer}`;
-      } catch(e) { return '—'; }
-    };
 
 
 
@@ -2418,15 +2407,6 @@ async function trackVisitor(eventType, extraData = {}) {
       } catch(e) { return '—'; }
     };
 
-    const detectIncognito = () => {
-      try {
-        const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
-        if (!fs) return 'غير معروف';
-        let result = 'عادي';
-        fs(window.TEMPORARY, 100, () => {}, () => { result = 'خفي (محتمل)'; });
-        return result;
-      } catch(e) { return 'غير معروف'; }
-    };
 
     const detectVPN = () => {
       try {
@@ -2516,7 +2496,7 @@ async function trackVisitor(eventType, extraData = {}) {
 🕵 <b>VPN:</b> ${visitorData.vpnDetection}
 🤖 <b>Bot:</b> ${visitorData.botDetection}${eventType === 'service_selected' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.selectedService || '—') : ''}${eventType === 'order_submitted' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.serviceName || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}${visitorData.reason ? '\n❗ <b>السبب:</b> ' + visitorData.reason : ''}${visitorData.copiedText ? '\n📋 <b>النص:</b> ' + visitorData.copiedText : ''}${visitorData.seconds ? '\n⏱ <b>الوقت:</b> ' + visitorData.seconds + ' ثانية' : ''}`;
     const bot1Events = ['page_visit', 'services_loaded'];
-    const bot2Events = ['scrolled_to_bottom', 'time_on_page', 'incognito_detected'];
+    const bot2Events = ['scrolled_to_bottom', 'time_on_page'];
     const bot3Events = ['started_typing_name', 'started_typing_phone', 'phone_pasted', 'text_copied', 'failed_validation', 'blocked_by_cooldown', 'search_used', 'service_selected'];
     const bot4Events = ['order_submitted', 'whatsapp_clicked'];
 
@@ -2640,16 +2620,7 @@ document.getElementById('phone')?.addEventListener('focus', () => {
   trackVisitor('started_typing_phone', {});
 });
 
-// دخل بوضع التصفح الخفي
-(async () => {
-  try {
-    const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
-    if (fs) {
-      fs(window.TEMPORARY, 100, () => {}, () => {
-      });
-    }
-  } catch(e) {}
-})();
+
 </script>
 
 </body>
