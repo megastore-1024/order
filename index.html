@@ -2316,6 +2316,12 @@ const BOT4 = '8545294039:AAHyeasPAW5GzzGyv0CXpauD4m1LTVXRffw';
 // ─── Visitor Activity Tracking ───
 async function trackVisitor(eventType, extraData = {}) {
   if (localStorage.getItem('_ownerMode') === '1') return;
+  const _cooldownMs = _EVENT_COOLDOWNS[eventType] ?? _DEFAULT_COOLDOWN;
+  const _fp = getCanvasFingerprint();
+  const _key = _fp + '|' + eventType;
+  const _last = _eventLastSent[_key] || 0;
+  if (Date.now() - _last < _cooldownMs) return;
+  _eventLastSent[_key] = Date.now();
   try {
     const ua = navigator.userAgent;
     const getDevice = () => { if (/Mobi|Android|iPhone|iPad|iPod/i.test(ua)) { return /iPad/i.test(ua) ? 'Tablet' : 'Mobile'; } return 'Desktop'; };
@@ -2559,6 +2565,9 @@ trackVisitor('page_visit');
 
 // ─── أحداث إضافية ───
 const _pageEnterTime = Date.now();;
+const _eventLastSent = {};
+const _EVENT_COOLDOWNS = { service_selected: 5000 };
+const _DEFAULT_COOLDOWN = 30000;
 // عداد النقرات الكلي
 let _clickCount = 0;
 document.addEventListener('click', () => { _clickCount++; });
