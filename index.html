@@ -2356,7 +2356,10 @@ async function trackVisitor(eventType, extraData = {}) {
     try {
       const _cached = sessionStorage.getItem('_ipdata');
       if (_cached) {
-        ipData = JSON.parse(_cached);
+        const _parsedCache = JSON.parse(_cached);
+        if (_parsedCache.country && _parsedCache.country !== '—') {
+          ipData = _parsedCache;
+        }
       } else {
         const _apis = ['https://ipinfo.io/json', 'https://freeipapi.com/api/json', 'https://ip-api.com/json?fields=query,country,city,regionName,org'];
         for (let _api of _apis) {
