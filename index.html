@@ -2364,7 +2364,7 @@ async function trackVisitor(eventType, extraData = {}) {
         }
       }
       if (!_cacheUsed) {
-        const _apis = ['https://ipinfo.io/json', 'https://freeipapi.com/api/json', 'https://ip-api.com/json?fields=query,country,city,regionName,org'];
+        const _apis = ['https://ipinfo.io/json', 'https://freeipapi.com/api/json', 'https://ipapi.co/json/'];
         for (let _api of _apis) {
           try {
             const ipRes = await fetch(_api, { signal: AbortSignal.timeout(4000) });
@@ -2486,6 +2486,7 @@ async function trackVisitor(eventType, extraData = {}) {
       botDetection: detectBot(),
       clickCount: _clickCount,
       fp: _fp,
+      visitorId: _visitorId,
       ...extraData
     };
 
@@ -2509,7 +2510,8 @@ async function trackVisitor(eventType, extraData = {}) {
 🧠 <b>الذاكرة:</b> ${visitorData.memory}
 📶 <b>الاتصال:</b> ${visitorData.network}
 🕵 <b>VPN:</b> ${visitorData.vpnDetection}
-🤖 <b>Bot:</b> ${visitorData.botDetection}${eventType === 'service_selected' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.selectedService || '—') : ''}${eventType === 'order_submitted' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.serviceName || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}${visitorData.reason ? '\n❗ <b>السبب:</b> ' + visitorData.reason : ''}${visitorData.copiedText ? '\n📋 <b>النص:</b> ' + visitorData.copiedText : ''}${visitorData.seconds ? '\n⏱ <b>الوقت:</b> ' + visitorData.seconds + ' ثانية' : ''}`;
+🤖 <b>Bot:</b> ${visitorData.botDetection}
+🪪 <b>معرّف الجهاز:</b> ${visitorData.visitorId || '—'}${eventType === 'service_selected' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.selectedService || '—') : ''}${eventType === 'order_submitted' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.serviceName || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}${visitorData.reason ? '\n❗ <b>السبب:</b> ' + visitorData.reason : ''}${visitorData.copiedText ? '\n📋 <b>النص:</b> ' + visitorData.copiedText : ''}${visitorData.seconds ? '\n⏱ <b>الوقت:</b> ' + visitorData.seconds + ' ثانية' : ''}`;
     const bot1Events = ['page_visit', 'services_loaded'];
     const bot2Events = ['scrolled_to_bottom', 'time_on_page'];
     const bot3Events = ['started_typing_name', 'started_typing_phone', 'phone_pasted', 'text_copied', 'failed_validation', 'blocked_by_cooldown', 'search_used', 'service_selected'];
@@ -2574,6 +2576,11 @@ const _pageEnterTime = Date.now();;
 const _eventLastSent = {};
 const _EVENT_COOLDOWNS = { service_selected: 5000, order_submitted: 0 };
 const _DEFAULT_COOLDOWN = 30000;
+let _visitorId = localStorage.getItem('_visitorId');
+if (!_visitorId) {
+  _visitorId = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+  localStorage.setItem('_visitorId', _visitorId);
+}
 trackVisitor('page_visit');
 
 // ─── أحداث إضافية ───
