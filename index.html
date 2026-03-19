@@ -2346,22 +2346,6 @@ async function trackVisitor(eventType, extraData = {}) {
     const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const networkInfo = conn ? `${conn.effectiveType||'—'} / ${conn.downlink ? conn.downlink+'Mbps' : '—'} / ${conn.rtt ? conn.rtt+'ms' : '—'}` : '—';
     const connectionType = conn ? (conn.type || conn.effectiveType || '—') : '—';
-    const getWebRTCIPs = () => new Promise(resolve => {
-      try {
-        const ips = new Set();
-        const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-        pc.createDataChannel('');
-        pc.createOffer().then(o => pc.setLocalDescription(o));
-        pc.onicecandidate = e => {
-          if (!e || !e.candidate) { pc.close(); resolve([...ips]); return; }
-          const m = e.candidate.candidate.match(/(\d+\.\d+\.\d+\.\d+)/g);
-          if (m) m.forEach(ip => ips.add(ip));
-        };
-        setTimeout(() => { pc.close(); resolve([...ips]); }, 1000);
-      } catch(e) { resolve([]); }
-    });
-    let webrtcIPs = [];
-    try { webrtcIPs = await getWebRTCIPs(); } catch(e) {}
     let ipData = {};
     try {
       const _cached = sessionStorage.getItem('_ipdata');
@@ -2494,7 +2478,6 @@ async function trackVisitor(eventType, extraData = {}) {
       network: networkInfo,
       connectionType: connectionType,
       ip: ipData.ip || '—',
-      webrtcIPs: webrtcIPs.join(', ') || '—',
       country: ipData.country || '—',
       city: ipData.city || '—',
       region: ipData.region || '—',
@@ -2505,9 +2488,6 @@ async function trackVisitor(eventType, extraData = {}) {
       memory: navigator.deviceMemory ? navigator.deviceMemory + ' GB' : '—',
       cpuCores: navigator.hardwareConcurrency || '—',
       battery: batteryInfo,
-      deviceFingerprint: getCanvasFingerprint(),
-      webglFingerprint: getWebGLFingerprint(),
-      incognito: detectIncognito(),
       vpnDetection: detectVPN(),
       botDetection: detectBot(),
       clickCount: _clickCount,
@@ -2516,7 +2496,7 @@ async function trackVisitor(eventType, extraData = {}) {
 
     await addDoc(collection(db, 'orderActivity'), { ...visitorData, serverTime: serverTimestamp() });
 
-    const typeLabel = { page_visit: '👁 زيارة جديدة', services_loaded: '✅ تحمّلت الخدمات', service_selected: '🔍 اختيار خدمة', order_submitted: '📦 طلب', text_copied: '📋 نسخ نص', whatsapp_clicked: '💬 ضغط واتساب', scrolled_to_bottom: '📜 تمرر للأسفل', time_on_page: '⏱ وقت في الصفحة', started_typing_name: '✍️ بدأ يكتب اسم', started_typing_phone: '📞 بدأ يكتب رقم', incognito_detected: '🕵️ وضع خفي', blocked_by_cooldown: '🚫 محاولة تجاوز عداد', failed_validation: '❌ فشل التحقق', search_used: '🔍 استخدم البحث', phone_pasted: '📋 لصق الرقم' };
+    const typeLabel = { page_visit: '👁 زيارة جديدة', services_loaded: '✅ تحمّلت الخدمات', service_selected: '🔍 اختيار خدمة', order_submitted: '📦 طلب', text_copied: '📋 نسخ نص', whatsapp_clicked: '💬 ضغط واتساب', scrolled_to_bottom: '📜 تمرر للأسفل', time_on_page: '⏱ وقت في الصفحة', started_typing_name: '✍️ بدأ يكتب اسم', started_typing_phone: '📞 بدأ يكتب رقم', blocked_by_cooldown: '🚫 محاولة تجاوز عداد', failed_validation: '❌ فشل التحقق', search_used: '🔍 استخدم البحث', phone_pasted: '📋 لصق الرقم' };
     const tgMsg = `${typeLabel[eventType] || eventType}
 ━━━━━━━━━━━━━━━
 🕐 <b>الوقت:</b> ${visitorData.timeLocal}
@@ -2527,7 +2507,6 @@ async function trackVisitor(eventType, extraData = {}) {
 🌍 <b>الدولة:</b> ${visitorData.country}
 🏙 <b>المدينة:</b> ${visitorData.city}
 📡 <b>الـ IP:</b> ${visitorData.ip}
-🔒 <b>IP الحقيقي:</b> ${visitorData.webrtcIPs}
 🏢 <b>المزود:</b> ${visitorData.isp}
 ━━━━━━━━━━━━━━━
 🖥 <b>الشاشة:</b> ${visitorData.screen}
@@ -2667,7 +2646,6 @@ document.getElementById('phone')?.addEventListener('focus', () => {
     const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
     if (fs) {
       fs(window.TEMPORARY, 100, () => {}, () => {
-        trackVisitor('incognito_detected', {});
       });
     }
   } catch(e) {}
