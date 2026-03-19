@@ -1445,7 +1445,11 @@ window.renderCatsBar = function() {
   bar.removeEventListener('scroll', bar._fadeHandler);
   bar._fadeHandler = updateFade;
   bar.addEventListener('scroll', updateFade);
-  setTimeout(() => { bar.scrollLeft = 0; updateFade(); }, 50);
+  if (activeCategoryId === 'all') {
+    setTimeout(() => { bar.scrollLeft = 0; updateFade(); }, 50);
+  } else {
+    setTimeout(updateFade, 50);
+  }
   setTimeout(updateFade, 400);
 }
 window.selectCategory = function(catId) {
