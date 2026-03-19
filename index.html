@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mega Store | اطلب الآن</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'%3E%3Cpath fill='%236366f1' d='M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: rgba(99,102,241,0.12);
+  --accent: #f59e0b;
+  --accent-dark: #d97706;
+  --success: #10b981;
+  --danger: #ef4444;
+  --bg: #0a0e1a;
+  --bg-card: #111827;
+  --bg-card2: #1a2235;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: rgba(255,255,255,0.07);
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-card2: #e8edf5;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --border: rgba(0,0,0,0.09);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+@media (prefers-color-scheme: light) {
+  body::before { display: none; }
+}
+
+/* ─── NAVBAR ─── */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand {
+  font-size: 22px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), #a855f7, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-brand i { font-size: 18px; }
+.nav-links { display: flex; gap: 8px; align-items: center; }
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.nav-link:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+.nav-cta {
+  background: var(--primary);
+  color: white !important;
+  padding: 8px 18px !important;
+  border-radius: 10px;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+  transition: all 0.2s !important;
+}
+.nav-cta:hover { background: var(--primary-dark) !important; transform: translateY(-1px); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+.hero::before {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+.hero::after {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%);
+  bottom: -50px; left: -100px;
+  animation-delay: -4s;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.3);
+  color: #a5b4fc;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 100px;
+  margin-bottom: 28px;
+  letter-spacing: 0.3px;
+  animation: fadeUp 0.6s ease-out both;
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.hero-title {
+  font-size: clamp(38px, 7vw, 72px);
+  font-weight: 900;
+  line-height: 1.4;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  animation: fadeUp 0.6s 0.1s ease-out both;
+}
+.hero-title span {
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: var(--text-muted);
+  font-weight: 500;
+  max-width: 540px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+  animation: fadeUp 0.6s 0.2s ease-out both;
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.3s ease-out both;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #7c3aed);
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  border-radius: var(--radius);
+  font-size: 17px;
+  font-weight: 800;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+  transition: all 0.25s;
+  text-decoration: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(99,102,241,0.5); }
+.btn-primary:active { transform: translateY(0); }
+.btn-ghost {
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 16px 30px;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+.hero-stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  max-width: 650px; /* لتحديد أقصى عرض للقسم وضم العناصر */
+  margin: 60px auto 0;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.4s ease-out both;
+}
+.hero-stat { text-align: center; }
+.hero-stat:first-child, .hero-stat:last-child { flex: 1; }
+.hero-stat:nth-child(2) { flex: 0 0 auto; min-width: 140px; margin: 0 10px; }
+.hero-stat-num {
+  font-size: 38px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--text), #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-stat-label { font-size: 14px; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
+
+/* ─── SECTION COMMON ─── */
+section { padding: 80px 24px; position: relative; z-index: 1; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-light);
+  color: #a5b4fc;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(99,102,241,0.2);
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ─── SERVICES ─── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.5s ease-out both;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99,102,241,0.05) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.service-card:hover { transform: translateY(-6px); border-color: rgba(99,102,241,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(99,102,241,0.15); }
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+.service-name { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.service-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+.service-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.service-price {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--accent);
+}
+.service-price span { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+.service-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(16,185,129,0.12);
+  color: #34d399;
+  border: 1px solid rgba(16,185,129,0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.service-badge.hot {
+  background: rgba(239,68,68,0.12);
+  color: #f87171;
+  border-color: rgba(239,68,68,0.2);
+}
+.service-badge.new {
+  background: rgba(99,102,241,0.12);
+  color: #a5b4fc;
+  border-color: rgba(99,102,241,0.2);
+}
+.service-card:nth-child(1) { animation-delay: 0.0s; }
+.service-card:nth-child(2) { animation-delay: 0.08s; }
+.service-card:nth-child(3) { animation-delay: 0.16s; }
+.service-card:nth-child(4) { animation-delay: 0.24s; }
+.service-card:nth-child(5) { animation-delay: 0.32s; }
+.service-card:nth-child(6) { animation-delay: 0.40s; }
+
+/* Loading & Empty states */
+.services-loading {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.services-loading i { font-size: 36px; margin-bottom: 16px; display: block; color: var(--primary); }
+.no-services {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.no-services i { font-size: 48px; margin-bottom: 16px; display: block; opacity: 0.4; }
+.no-services p { font-size: 18px; font-weight: 700; }
+
+/* ─── HOW IT WORKS ─── */
+.steps-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.step-card { text-align: center; padding: 20px; position: relative; }
+.step-card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 1px;
+  height: 40%;
+  background: linear-gradient(to bottom, var(--border), transparent);
+}
+.step-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 auto 18px;
+  box-shadow: 0 8px 20px rgba(99,102,241,0.35);
+}
+.step-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+/* ─── ORDER FORM ─── */
+.order-section { background: var(--bg); }
+.order-container {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.order-container::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.form-title {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 30px; }
+.form-group { margin-bottom: 20px; }
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.form-input, .form-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--primary);
+  background: rgba(99,102,241,0.05);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+}
+.form-input::placeholder { color: rgba(148,163,184,0.5); }
+.form-textarea { resize: none; min-height: 110px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Services Picker */
+.services-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.picker-item {
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  user-select: none;
+}
+.picker-item:hover { border-color: rgba(99,102,241,0.3); background: rgba(99,102,241,0.05); }
+.picker-item.selected {
+  border-color: var(--primary);
+  background: rgba(99,102,241,0.1);
+  color: #a5b4fc;
+}
+.picker-check {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-size: 10px;
+}
+.picker-item.selected .picker-check {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.picker-price {
+  margin-right: auto;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* Branch Panel */
+.branch-panel {
+  background: rgba(99,102,241,0.04);
+  border: 1px solid rgba(99,102,241,0.15);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-top: -4px;
+  animation: fadeUp 0.3s ease-out;
+}
+.branch-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.branch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.branch-item {
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.branch-item:hover { border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.06); }
+.branch-item.selected {
+  border-color: var(--primary);
+  background: rgba(99,102,241,0.12);
+}
+.branch-name { font-size: 13px; font-weight: 700; }
+.branch-price { font-size: 14px; font-weight: 900; color: var(--accent); margin-top: 3px; }
+
+/* Picker loading */
+.picker-loading {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.picker-loading i { display: block; font-size: 22px; margin-bottom: 8px; color: var(--primary); }
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), #7c3aed);
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: var(--radius);
+  font-size: 17px;
+  font-weight: 800;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 8px 25px rgba(99,102,241,0.35);
+  transition: all 0.25s;
+  margin-top: 10px;
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 35px rgba(99,102,241,0.45); }
+.submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+/* Trust Strip */
+.trust-strip {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.trust-item { display: flex; align-items: center; gap: 12px; }
+.trust-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.trust-text { font-size: 14px; font-weight: 800; }
+.trust-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* Reviews */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.review-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: transform 0.3s;
+}
+.review-card:hover { transform: translateY(-4px); }
+.review-stars { color: var(--accent); font-size: 18px; margin-bottom: 14px; letter-spacing: 2px; }
+.review-text { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+.reviewer { display: flex; align-items: center; gap: 12px; }
+.reviewer-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.reviewer-name { font-size: 14px; font-weight: 800; }
+.reviewer-handle { font-size: 12px; color: var(--text-muted); }
+
+/* Footer */
+footer {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+}
+.footer-brand {
+  font-size: 20px; font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-sub { font-size: 13px; color: var(--text-muted); }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shakeX {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+/* Toasts & Banner */
+.toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; pointer-events: none; }
+.toast { background: var(--bg-card); border-left: 4px solid var(--danger); border-radius: 8px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; animation: toastSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; pointer-events: auto; }
+.toast.success { border-left-color: var(--success); }
+.toast-icon { font-size: 20px; color: var(--danger); }
+.toast.success .toast-icon { color: var(--success); }
+.toast-msg { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; line-height: 1.5; }
+@keyframes toastSlide { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes toastFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+
+.cooldown-banner { position: fixed; top: 0; left: 0; right: 0; background: rgba(239, 68, 68, 0.95); color: white; text-align: center; padding: 12px 20px; font-size: 14px; font-weight: 700; z-index: 9998; backdrop-filter: blur(10px); display: none; transform: translateY(-100%); transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+.cooldown-banner.show { transform: translateY(0); display: block; }
+
+/* Success State */
+.order-success {
+  text-align: center;
+  padding: 40px 20px;
+  display: none;
+}
+.success-icon {
+  width: 80px; height: 80px;
+  background: rgba(16,185,129,0.12);
+  border: 2px solid rgba(16,185,129,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 24px;
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  color: #34d399;
+}
+@keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+.success-title { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+.success-sub { font-size: 15px; color: var(--text-muted); }
+
+/* Divider */
+.divider {
+  width: 60px; height: 3px;
+  background: linear-gradient(to right, var(--primary), transparent);
+  margin: 16px auto 0;
+  border-radius: 10px;
+}
+/* ─── CATEGORIES BAR ─── */
+.cats-bar-wrap {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  display: flex;
+  justify-content: center;
+}
+.cats-bar-wrap::before,
+.cats-bar-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cats-bar-wrap::before {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-card) 30%, transparent);
+}
+.cats-bar-wrap::after {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-card) 30%, transparent);
+}
+.cats-bar-wrap.fade-right::before { opacity: 1; }
+.cats-bar-wrap.fade-left::after { opacity: 1; }
+.cats-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 12px 8px;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+  margin-bottom: 24px;
+  scrollbar-width: none;
+}
+.cats-bar::-webkit-scrollbar { display: none; }
+.cat-btn {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.cat-btn:hover { border-color: rgba(99,102,241,0.4); color: var(--text); }
+.cat-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.35);
+}
+
+/* ─── SEARCH ─── */
+.search-wrap {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto 20px;
+}
+.search-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 44px 12px 16px;
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s;
+}
+.search-input:focus { border-color: var(--primary); background: rgba(99,102,241,0.06); box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+.search-input::placeholder { color: rgba(148,163,184,0.5); }
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0; left: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  z-index: 200;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  display: none;
+}
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: rgba(99,102,241,0.08); }
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar { padding: 12px 16px; justify-content: center; }
+  .nav-links { display: none; }
+  .nav-brand { font-size: 19px; }
+
+  /* Hero */
+  .hero { padding: 100px 18px 90px; min-height: auto; }
+  .hero-badge { font-size: 12px; padding: 7px 14px; margin-bottom: 24px; }
+  .hero-title { font-size: clamp(26px, 8vw, 44px); margin-bottom: 14px; }
+  .hero-subtitle { font-size: 15px; margin-bottom: 36px; line-height: 1.8; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 320px; justify-content: center; padding: 15px 24px; font-size: 16px; }
+  .hero-stats { gap: 28px; margin-top: 40px; flex-wrap: nowrap; justify-content: center; }
+  .hero-stat-num { font-size: 22px; }
+  .hero-stat-label { font-size: 11px; }
+
+  /* Sections */
+  section { padding: 75px 16px; }
+  .section-header { margin-bottom: 36px; }
+  .section-title { font-size: clamp(22px, 6vw, 32px); }
+  .section-sub { font-size: 14px; }
+
+  /* Services Grid */
+  .services-grid { grid-template-columns: 1fr; gap: 14px; }
+  .service-card { padding: 20px; border-radius: 18px; }
+  .service-card:hover { transform: none; }
+  .service-icon { width: 46px; height: 46px; font-size: 19px; margin-bottom: 14px; }
+  .service-name { font-size: 16px; }
+  .service-desc { font-size: 13px; margin-bottom: 16px; }
+  .service-price { font-size: 19px; }
+
+  /* Steps */
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .step-card { padding: 16px 12px; }
+  .step-card:not(:last-child)::after { display: none; }
+  .step-num { width: 46px; height: 46px; font-size: 17px; margin-bottom: 12px; }
+  .step-title { font-size: 14px; }
+  .step-desc { font-size: 12px; }
+
+  /* Order Form */
+  .order-container { padding: 22px 16px 140px; border-radius: 22px; margin: 0 4px; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .form-title { font-size: 20px; }
+  .form-sub { font-size: 13px; margin-bottom: 22px; }
+  .form-group { margin-bottom: 16px; }
+  .form-input, .form-textarea { padding: 13px 14px; font-size: 15px; border-radius: 12px; }
+  .form-label { font-size: 12px; margin-bottom: 6px; }
+  .submit-btn { padding: 16px; font-size: 16px; border-radius: 12px; margin-top: 6px; }
+
+  /* Picker */
+  .picker-item { padding: 11px 12px; font-size: 13px; gap: 8px; border-radius: 12px; }
+  .picker-price { font-size: 12px; }
+  .branch-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .branch-item { padding: 10px 10px; border-radius: 10px; }
+  .branch-name { font-size: 12px; }
+  .branch-price { font-size: 13px; }
+
+  /* Trust Strip */
+  .trust-strip { gap: 14px; padding-top: 24px; margin-top: 28px; }
+  .trust-item { gap: 10px; }
+  .trust-icon { width: 38px; height: 38px; font-size: 14px; border-radius: 10px; }
+  .trust-text { font-size: 13px; }
+  .trust-sub { font-size: 11px; }
+
+  /* Reviews */
+  .reviews-grid { grid-template-columns: 1fr; gap: 14px; }
+  .review-card { padding: 18px; }
+  .review-card:hover { transform: none; }
+  .review-text { font-size: 14px; }
+  .review-stars { font-size: 15px; margin-bottom: 10px; }
+
+  /* WhatsApp Float */
+  .wa-float { bottom: 16px; left: 16px; width: 52px; height: 52px; font-size: 23px; }
+
+  /* Footer */
+  footer { padding: 24px 16px; }
+  .footer-brand { font-size: 18px; }
+}
+
+@media (max-width: 380px) {
+  .hero-stats { gap: 12px; }
+  .hero-stat-num { font-size: 18px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .branch-grid { grid-template-columns: 1fr; }
+  .order-container { padding: 18px 12px; margin: 0; border-radius: 18px; }
+}
+</style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("MQsv_SMY9admtTYbj");
+   })();
+</script>
+</head>
+<body>
+
+<!-- ─── LOADING SCREEN ─── -->
+<div id="loaderScreen" style="
+  display:none; /* تم الإخفاء لرفع سرعة الموقع للمعلنين */ position:fixed; inset:0; z-index:99999;
+  background:#0a0e1a;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:28px;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+">
+<script>
+(function(){
+  const loader = document.getElementById('loaderScreen');
+  if(!loader) return;
+  const isLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  loader.style.background = isLight ? '#f1f5f9' : '#0a0e1a';
+})();
+</script>
+  <!-- النجوم الخلفية -->
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+    <div id="starsBox"></div>
+  </div>
+
+  <!-- اللوغو -->
+  <div style="position:relative;z-index:1;text-align:center;">
+    <div style="
+      width:80px;height:80px;
+      background:linear-gradient(135deg,#6366f1,#7c3aed);
+      border-radius:24px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:36px;color:white;
+      margin:0 auto 20px;
+      box-shadow:0 0 40px rgba(99,102,241,0.6);
+      animation: loaderPulse 2s ease-in-out infinite;
+    ">
+      <i class="fas fa-bolt"></i>
+    </div>
+    <div style="
+      font-family:'Tajawal',sans-serif;
+      font-size:26px;font-weight:900;
+      background:linear-gradient(135deg,#6366f1,#a855f7,#f59e0b);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      margin-bottom:6px;
+    ">Mega Store</div>
+    <div style="font-family:'Tajawal',sans-serif;font-size:14px;color:#475569;font-weight:600;">
+      جاري تحميل الخدمات...
+    </div>
+<script>
+(function(){
+  const txt = document.currentScript.previousElementSibling;
+  if(!txt) return;
+  const isLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  txt.style.color = isLight ? '#475569' : '#94a3b8';
+})();
+</script>
+  </div>
+
+  <!-- Progress Bar -->
+  <div style="position:relative;z-index:1;width:200px;">
+    <div id="loaderTrack" style="height:3px;background:rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;">
+<script>
+(function(){
+  const track = document.getElementById('loaderTrack');
+  if(!track) return;
+  const isLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  track.style.background = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.07)';
+})();
+</script>
+      <div id="loaderBar" style="
+        height:100%;width:0%;
+        background:linear-gradient(90deg,#6366f1,#a855f7);
+        border-radius:10px;
+        transition:width 0.3s ease;
+        box-shadow:0 0 10px rgba(99,102,241,0.8);
+      "></div>
+    </div>
+  </div>
+
+  <!-- النقاط المتحركة -->
+  <div style="position:relative;z-index:1;display:flex;gap:8px;">
+    <span class="ldot"></span><span class="ldot" style="animation-delay:0.2s"></span><span class="ldot" style="animation-delay:0.4s"></span>
+  </div>
+</div>
+
+<style>
+@keyframes loaderPulse {
+  0%,100%{box-shadow:0 0 30px rgba(99,102,241,0.5);}
+  50%{box-shadow:0 0 60px rgba(99,102,241,0.9),0 0 100px rgba(168,85,247,0.3);}
+}
+@keyframes ldotAnim {
+  0%,80%,100%{transform:scale(0.6);opacity:0.3;}
+  40%{transform:scale(1);opacity:1;}
+}
+.ldot {
+  width:8px;height:8px;
+  background:#6366f1;border-radius:50%;
+  display:inline-block;
+  animation:ldotAnim 1.2s ease-in-out infinite;
+}
+@keyframes starTwinkle {
+  0%,100%{opacity:0.2;} 50%{opacity:1;}
+}
+</style>
+
+<script>
+// نجوم خلفية
+(function(){
+  const box = document.getElementById('starsBox');
+  if(!box) return;
+  for(let i=0;i<60;i++){
+    const s = document.createElement('div');
+    const size = Math.random()*2.5+1;
+    s.style.cssText = `
+      position:absolute;
+      width:${size}px;height:${size}px;
+      background:white;border-radius:50%;
+      top:${Math.random()*100}%;left:${Math.random()*100}%;
+      animation:starTwinkle ${2+Math.random()*3}s ease-in-out infinite;
+      animation-delay:${Math.random()*3}s;
+      opacity:0.3;
+    `;
+    box.appendChild(s);
+  }
+})();
+
+// Progress bar وهمي يعطي إحساس بالتقدم
+let _loaderProgress = 0;
+const _loaderBar = document.getElementById('loaderBar');
+const _loaderInterval = setInterval(() => {
+  if(_loaderProgress < 85) {
+    _loaderProgress += Math.random() * 12;
+    if(_loaderBar) _loaderBar.style.width = Math.min(_loaderProgress, 85) + '%';
+  }
+}, 300);
+
+window._hideLoader = function() {
+  clearInterval(_loaderInterval);
+  if(_loaderBar) _loaderBar.style.width = '100%';
+  setTimeout(() => {
+    const loader = document.getElementById('loaderScreen');
+    if(loader){
+      loader.style.opacity = '0';
+      loader.style.visibility = 'hidden';
+      setTimeout(() => loader.remove(), 500);
+    }
+  }, 400);
+};
+</script>
+
+<a href="https://wa.me/972566912007" target="_blank" style="position:fixed; bottom:20px; right:20px; z-index:999; width:58px; height:58px; background:linear-gradient(135deg,#25D366,#128C7E); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:27px; color:white; box-shadow:0 4px 22px rgba(37,211,102,0.5); text-decoration:none; animation:pulse 2s infinite;">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<div id="cooldownBanner" class="cooldown-banner">
+  <i class="fas fa-clock"></i> عذراً، يجب الانتظار لانتهاء العداد لتتمكن من إرسال طلب جديد.
+</div>
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <i class="fas fa-bolt" style="background: linear-gradient(135deg, #6366f1, #a855f7, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+    Mega Store
+  </div>
+  <div class="nav-links">
+    <a href="#services" class="nav-link">الخدمات</a>
+    <a href="#how" class="nav-link">كيف يعمل</a>
+    <a href="#order" class="nav-link nav-cta">اطلب الآن</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      نحن متاحون الآن · خدمة فورية
+    </div>
+    <h1 class="hero-title">
+      اشتراكاتك الرقمية المفضلة<br>
+      <span>بأرخص سعر وتسليم فوري</span>
+    </h1>
+    <p class="hero-subtitle">
+  حسابات أصلية مضمونة تُسلم خلال ثوانٍ — بدون تعقيد أو انتظار
+</p>
+    <div style="display:flex; justify-content:center; gap:14px; margin-bottom:32px; flex-wrap:wrap; animation: fadeUp 0.6s 0.25s ease-out both;">
+  
+  <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, #ef4444, #991b1b); box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px) scale(1.05)'; this.style.boxShadow='0 15px 25px -5px rgba(239, 68, 68, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 20px -5px rgba(239, 68, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)';">
+    <i class="fas fa-play" style="margin-left: 3px;"></i>
+  </div>
+
+  <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px) scale(1.05)'; this.style.boxShadow='0 15px 25px -5px rgba(16, 185, 129, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 20px -5px rgba(16, 185, 129, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)';">
+    <i class="fas fa-robot"></i>
+  </div>
+
+  <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, #8b5cf6, #5b21b6); box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px) scale(1.05)'; this.style.boxShadow='0 15px 25px -5px rgba(139, 92, 246, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 20px -5px rgba(139, 92, 246, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)';">
+    <i class="fas fa-wand-magic-sparkles"></i>
+  </div>
+
+  <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px) scale(1.05)'; this.style.boxShadow='0 15px 25px -5px rgba(59, 130, 246, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 20px -5px rgba(59, 130, 246, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)';">
+    <i class="fas fa-scissors"></i>
+  </div>
+
+</div>
+
+<div class="hero-actions">
+      <a href="#order" class="btn-primary" style="transform: scale(1.05);" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 8px 30px rgba(37,211,102,0.4);">
+        <i class="fab fa-whatsapp" style="font-size: 20px;"></i>
+        اطلب عبر واتساب الآن
+      </a>
+    </div>
+
+<div style="margin-top:10px; font-size:13px; color:#f87171; font-weight:700;">
+  ⚠️ متبقي عدد محدود من الحسابات اليوم
+</div>
+
+<div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">+500</div>
+        <div class="hero-stat-label">عميل موثق</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">فوري</div>
+        <div class="hero-stat-label">تسليم الحسابات</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-label">ضمان استرداد الأموال</div>
+      </div>
+   </div>
+
+<div style="margin-top:30px; font-size:13px; color:var(--text-muted);">
+  اسحب للأسفل لرؤية العروض ↓
+</div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background: var(--bg-card); border-top: 1px solid var(--border);">
+  <div class="section-header">
+    <div class="section-tag" style="background: rgba(239,68,68,0.12); color: #f87171; border-color: rgba(239,68,68,0.2);"><i class="fas fa-fire"></i> الأرصدة تنفد بسرعة</div>
+    <h2 class="section-title">عروض اليوم المحدودة</h2>
+    <div class="divider"></div>
+    <p class="section-sub" style="margin-top:14px;">باقي عدد قليل من الحسابات بالسعر المخفض. اغتنم الفرصة قبل نفاذ الكمية!</p>
+  </div>
+
+  <!-- بحث -->
+  <div class="search-wrap" id="searchWrap">
+    <input class="search-input" id="svcSearchInput" placeholder="ابحث عن خدمة..." oninput="handleServiceSearch()" onfocus="handleSearchFocus()">
+    <i class="fas fa-search search-icon"></i>
+    <div class="search-dropdown" id="searchDropdown"></div>
+  </div>
+
+  <!-- أقسام -->
+  <div class="cats-bar-wrap" id="catsBarWrap">
+    <div class="cats-bar" id="catsBar"></div>
+  </div>
+
+  <div class="services-grid" id="servicesGrid">
+    <div class="services-loading">
+      <i class="fas fa-circle-notch fa-spin"></i>
+      <p>جاري تحميل الخدمات...</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="steps-section">
+  <div class="section-header">
+    <div class="section-tag"><i class="fas fa-bolt"></i> طريقة العمل</div>
+    <h2 class="section-title">كيف يتم الطلب؟</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-title">اختر الخدمة</div>
+      <div class="step-desc">تصفح خدماتنا واختر ما يناسب احتياجاتك</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-title">أرسل الطلب</div>
+      <div class="step-desc">أكمل النموذج واضغط إرسال الطلب — يرجى التأكد من بياناتك قبل الإرسال</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-title">نتواصل معك</div>
+      <div class="step-desc">يتواصل معك فريقنا خلال دقائق لتأكيد التفاصيل</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-title">استلم خدمتك</div>
+      <div class="step-desc">ننجز طلبك بأعلى جودة وفي الوقت المحدد</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin:18px auto 0; padding:12px 20px; background:rgba(99,102,241,0.07); border:1px solid rgba(99,102,241,0.2); border-radius:12px; max-width:580px;">
+    <i class="fas fa-wallet" style="color:var(--accent); margin-left:6px;"></i>
+    <span style="font-size:13px; color:var(--text-muted); line-height:1.7;">لا حاجة لبطاقة فيزا أو حساب PayPal، يتم الدفع عبر التطبيق البنكي أو آيبراق أو محفظة بايننس بعد أن نتواصل معك عبر واتساب</span>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order" class="order-section">
+  <div class="section-header">
+    <div class="section-tag"><i class="fas fa-clipboard-list"></i> نموذج الطلب</div>
+    <h2 class="section-title">اطلب الآن</h2>
+    <div class="divider"></div>
+    <p class="section-sub" style="margin-top:14px;">أرسل طلبك وسنتواصل معك في أقرب وقت</p>
+  </div>
+
+  <div class="order-container">
+    <!-- FORM -->
+    <div id="orderForm">
+      <div class="form-title">
+        <i class="fas fa-pen-to-square" style="color:var(--primary); font-size:20px;"></i>
+        تفاصيل طلبك
+      </div>
+      <div class="form-sub">جميع الحقول مطلوبة لمعالجة طلبك</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">الاسم</label>
+          <input type="text" class="form-input" id="name" placeholder="اسمك الأول">
+        </div>
+        <div class="form-group">
+          <label class="form-label">رقم الواتساب</label>
+          <input type="tel" class="form-input" id="phone" placeholder="+972 5x xxx xxxx">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">الخدمة المطلوبة</label>
+        <div id="selectedServiceArea" style="background:var(--bg-card); border:1.5px solid var(--border); border-radius:14px; padding:14px 18px; display:flex; align-items:center; gap:12px; color:var(--text-muted); font-size:14px;">
+          <i class="fas fa-arrow-up" style="color:var(--primary); font-size:14px; flex-shrink:0;"></i>
+          <span id="selectedServiceText">اختر خدمة من القائمة أعلاه</span>
+        </div>
+        <div id="selectedBranchArea" style="display:none; margin-top:8px;"></div>
+        <!-- hidden full picker for JS -->
+        <div class="services-picker" id="servicesPicker" style="display:none;"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ملاحظات إضافية (اختياري)</label>
+        <textarea class="form-textarea" id="notes" placeholder="أي تفاصيل إضافية تريد إضافتها..."></textarea>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 8px 25px rgba(37,211,102,0.35);">
+        <i class="fab fa-whatsapp" style="font-size: 18px;"></i>
+        إتمام الطلب عبر واتساب
+      </button>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="order-success" id="orderSuccess">
+      <div class="success-icon"><i class="fas fa-check"></i></div>
+      <div class="success-title">تم استلام طلبك!</div>
+      <div style="background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2); border-radius:12px; padding:12px 18px; margin-bottom:16px; font-size:14px; display:flex; align-items:center; gap:10px;">
+        <i class="fas fa-tag" style="color:var(--primary);"></i>
+        <span style="color:var(--text-muted);">الخدمة المختارة:</span>
+        <strong id="successServiceName" style="color:var(--primary); flex:1;"></strong>
+      </div>
+      <div class="success-sub" style="margin-bottom:16px;">تم تسجيل طلبك بنجاح! الآن أرسل الرسالة التلقائية على واتساب حتى نتمكن من معالجة طلبك.</div>
+      <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:12px; padding:12px 16px; margin-bottom:20px; font-size:13px; color:#f59e0b; display:flex; gap:10px; align-items:flex-start; text-align:right;">
+        <i class="fas fa-triangle-exclamation" style="margin-top:2px; flex-shrink:0;"></i>
+        <span id="warningText">سيتم إرسال طلبك للإيميل الخاص بنا لكن للإستعجال أو قد يتعذر الإرسال للإيميل لذا قد لا نرى طلبك إذا فتحت واتساب ولم ترسل الرسالة التلقائية — تأكد من الضغط على <strong>إرسال</strong> داخل واتساب.</span>
+      </div>
+      <a href="#" id="waLink" class="btn-primary" style="display:inline-flex; margin:0 auto;" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        تواصل مباشرة على واتساب
+      </a>
+      <button onclick="showNewOrderForm()" style="margin-top:12px; background:transparent; border:1.5px dashed rgba(255,255,255,0.12); color:var(--text-muted); padding:13px 28px; border-radius:var(--radius); font-size:14px; font-weight:700; font-family:'Tajawal',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all 0.25s; width:100%; justify-content:center; letter-spacing:0.2px;" onmouseover="this.style.borderColor='rgba(99,102,241,0.4)';this.style.color='#a5b4fc';" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='var(--text-muted)';">
+  <i class="fas fa-rotate-right" style="font-size:13px;"></i> طلب خدمة جديدة
+</button>
+    </div>
+  </div>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-item">
+      <div class="trust-icon" style="background: rgba(16,185,129,0.12); color: #34d399;"><i class="fas fa-shield-halved"></i></div>
+      <div>
+        <div class="trust-text">ضمان الجودة</div>
+        <div class="trust-sub">استرداد كامل إن لم ترضَ</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon" style="background: rgba(99,102,241,0.12); color: #a5b4fc;"><i class="fas fa-bolt"></i></div>
+      <div>
+        <div class="trust-text">تنفيذ سريع</div>
+        <div class="trust-sub">في دقائق</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon" style="background: rgba(37,211,102,0.12); color: #25D366;"><i class="fab fa-whatsapp"></i></div>
+      <div>
+        <div class="trust-text">دعم مستمر</div>
+        <div class="trust-sub">متاح 24/7</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon" style="background: rgba(245,158,11,0.12); color: #fbbf24;"><i class="fas fa-star"></i></div>
+      <div>
+        <div class="trust-text">تقييم 5 نجوم</div>
+        <div class="trust-sub">+500 عميل راضٍ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <i class="fas fa-bolt"></i> Mega Store
+  </div>
+  <div class="footer-sub">© 2026 Mega Store · جميع الحقوق محفوظة</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  Timestamp,
+  onSnapshot,
+  query,
+  orderBy,
+  where
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ─── Firebase Init ───
+const firebaseConfig = {
+  apiKey: "AIzaSyAjJ_t5-S68q-zTRkSQNMZPlW1buNJbHxM",
+  authDomain: "order-58d22.firebaseapp.com",
+  projectId: "order-58d22",
+  storageBucket: "order-58d22.firebasestorage.app",
+  messagingSenderId: "535350206918",
+  appId: "1:535350206918:web:e98ed31054004a20c452c7"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ─── State ───
+let servicesData = [];
+let categoriesData = [];
+let activeCategoryId = 'all';
+let selectedServiceId = null;
+let selectedServiceName = null;
+let selectedBranchCode = null;
+let selectedPrice = null;
+
+// ─── Icon Colors Palette ───
+const iconStyles = [
+  { bg: 'rgba(99,102,241,0.12)',  color: '#a5b4fc' },
+  { bg: 'rgba(168,85,247,0.12)', color: '#c084fc' },
+  { bg: 'rgba(245,158,11,0.12)', color: '#fbbf24' },
+  { bg: 'rgba(16,185,129,0.12)', color: '#34d399' },
+  { bg: 'rgba(239,68,68,0.12)',  color: '#f87171' },
+  { bg: 'rgba(59,130,246,0.12)', color: '#60a5fa' },
+];
+window.loadCategories = function() {
+  if (window._categoriesListenerActive) return;
+  window._categoriesListenerActive = true;
+  onSnapshot(collection(db, 'categories'), (snap) => {
+    categoriesData = [];
+    snap.forEach(d => categoriesData.push({ id: d.id, ...d.data() }));
+    categoriesData.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    renderCatsBar();
+    renderServiceCards(document.getElementById('servicesGrid'));
+    if(window._hideLoader) window._hideLoader();
+    if (!window._servicesLoadedTracked) {
+      window._servicesLoadedTracked = true;
+      trackVisitor('services_loaded', {
+        servicesCount: servicesData.length,
+        categoriesCount: categoriesData.length
+      });
+    }
+  });
+}
+
+window.renderCatsBar = function() {
+  const bar = document.getElementById('catsBar');
+  const wrap = document.getElementById('catsBarWrap');
+  if (!bar) return;
+  bar.innerHTML = `<button class="cat-btn ${activeCategoryId==='all'?'active':''}" onclick="selectCategory('all')"><i class="fas fa-border-all" style="margin-left:4px;"></i> الكل</button>`;
+  categoriesData.forEach(cat => {
+    bar.innerHTML += `<button class="cat-btn ${activeCategoryId===cat.id?'active':''}" onclick="selectCategory('${cat.id}')">${cat.name}</button>`;
+  });
+  if (!wrap) return;
+  const updateFade = () => {
+    const scrollLeft = Math.abs(bar.scrollLeft);
+    const maxScroll = bar.scrollWidth - bar.clientWidth;
+    wrap.classList.toggle('fade-right', scrollLeft > 8);
+    wrap.classList.toggle('fade-left', scrollLeft < maxScroll - 8);
+  };
+  bar.removeEventListener('scroll', bar._fadeHandler);
+  bar._fadeHandler = updateFade;
+  bar.addEventListener('scroll', updateFade);
+  setTimeout(() => { bar.scrollLeft = 0; updateFade(); }, 50);
+  setTimeout(updateFade, 400);
+}
+window.selectCategory = function(catId) {
+  activeCategoryId = catId;
+  renderCatsBar();
+  renderServiceCards(document.getElementById('servicesGrid'));
+}
+
+window.getFilteredServices = function() {
+  if (activeCategoryId === 'all') {
+    // ترتيب: القسم الأقصى يميناً أولاً، ثم خدماته بترتيبها، ثم الخدمات بدون قسم
+    let result = [];
+    categoriesData.forEach(cat => {
+      let svcInCat = servicesData.filter(s => s.categoryId === cat.id).sort((a,b)=>(a.sortOrder||0)-(b.sortOrder||0));
+      result.push(...svcInCat);
+    });
+    let noCat = servicesData.filter(s => !s.categoryId || !categoriesData.find(c=>c.id===s.categoryId)).sort((a,b)=>(a.sortOrder||0)-(b.sortOrder||0));
+    result.push(...noCat);
+    return result;
+  }
+  return servicesData.filter(s => s.categoryId === activeCategoryId).sort((a,b)=>(a.sortOrder||0)-(b.sortOrder||0));
+}
+
+window.handleServiceSearch = function() {
+  const q = document.getElementById('svcSearchInput').value.trim();
+  const dd = document.getElementById('searchDropdown');
+  if (!q) { dd.style.display = 'none'; return; }
+  const lower = q.toLowerCase();
+  const results = servicesData.filter(s =>
+    (s.name||'').toLowerCase().includes(lower) ||
+    (s.description||'').toLowerCase().includes(lower)
+  ).slice(0, 8);
+  if (results.length === 0) {
+    dd.innerHTML = `<div style="padding:14px; text-align:center; color:var(--text-muted); font-size:13px;">لا توجد نتائج</div>`;
+  } else {
+    const iconStyles2 = [
+      'rgba(99,102,241,0.12)','rgba(168,85,247,0.12)','rgba(245,158,11,0.12)',
+      'rgba(16,185,129,0.12)','rgba(239,68,68,0.12)','rgba(59,130,246,0.12)'
+    ];
+    const iconColors2 = ['#a5b4fc','#c084fc','#fbbf24','#34d399','#f87171','#60a5fa'];
+    dd.innerHTML = results.map((s, i) => {
+      let idx2 = i % 6;
+      let iconCls = s.icon ? `fa-${s.icon}` : 'fa-cube';
+      let isImg = s.iconUrl && /^https?:\/\//.test(s.iconUrl);
+      let price = s.hasBranches && s.branches?.length ? Math.min(...s.branches.map(b=>Number(b.price)||0)) + '₪+' : (s.price||0) + '₪';
+      let iconHtml = isImg
+        ? `<img src="${s.iconUrl}" style="width:24px;height:24px;object-fit:contain;border-radius:5px;" onerror="this.style.display='none'">`
+        : `<div style="width:24px;height:24px;background:${iconStyles2[idx2]};color:${iconColors2[idx2]};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;"><i class="fas ${iconCls}"></i></div>`;
+      return `<div class="search-result-item" onclick="pickSearchResult('${s.id}')">
+        ${iconHtml}
+        <span style="flex:1;font-size:13px;font-weight:700;">${s.name}</span>
+        <span style="font-size:12px;font-weight:800;color:var(--accent);">${price}</span>
+      </div>`;
+    }).join('');
+  }
+  dd.style.display = 'block';
+}
+let _searchStarted = false;
+window.handleSearchFocus = function() {
+  const wrap = document.getElementById('searchWrap');
+  if (!wrap) return;
+  const navbar = document.querySelector('nav') || document.querySelector('.navbar') || document.querySelector('header');
+  const navH = navbar ? navbar.getBoundingClientRect().height : 70;
+  const rect = wrap.getBoundingClientRect();
+  const currentTop = window.scrollY || window.pageYOffset;
+  const targetY = currentTop + rect.top - navH - 12;
+  window.scrollTo({ top: targetY, behavior: 'smooth' });
+  if (!_searchStarted) { _searchStarted = true; trackVisitor('search_used', {}); }
+}
+
+window.pickSearchResult = function(serviceId) {
+  document.getElementById('svcSearchInput').value = '';
+  document.getElementById('searchDropdown').style.display = 'none';
+  document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => triggerPickerSelect(serviceId), 600);
+}
+
+// إخفاء dropdown لما يضغط خارجه
+document.addEventListener('click', e => {
+  if (!document.getElementById('searchWrap')?.contains(e.target)) {
+    const dd = document.getElementById('searchDropdown');
+    if (dd) dd.style.display = 'none';
+  }
+});
+// ─── Load Services from Firebase (Real-time) ───
+function loadServices() {
+  const grid = document.getElementById('servicesGrid');
+  const picker = document.getElementById('servicesPicker');
+
+  if (window._servicesListenerActive) return;
+  window._servicesListenerActive = true;
+  onSnapshot(collection(db, 'services'), (snap) => {
+    servicesData = [];
+    snap.forEach(docSnap => servicesData.push({ id: docSnap.id, ...docSnap.data() }));
+    servicesData.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    renderServiceCards(grid);
+    if (!selectedServiceId) {
+      renderServicePicker(picker);
+    } else {
+      // تحديث مربعات الحجوزات في الفرع المختار بشكل صامت
+      const sel = servicesData.find(s => s.id === selectedServiceId);
+      if (sel && sel.hasBranches && sel.branches) {
+        const branchGrid = document.getElementById('formBranchGrid');
+        if (branchGrid) {
+          const items = branchGrid.querySelectorAll('.branch-item');
+          sel.branches.forEach((branch, i) => {
+            if (!items[i]) return;
+            let sq = items[i].querySelector('.booking-squares');
+            if (sq && branch.isBooking && parseInt(branch.bookingCapacity) > 0) {
+              const cap = parseInt(branch.bookingCapacity);
+              const cur = parseInt(branch.currentBookings) || 0;
+              let squares = '';
+              for (let j = 0; j < cap; j++) {
+                squares += j < cur
+                  ? '<div style="width:10px;height:10px;background:var(--success);border-radius:2px;box-shadow:0 0 5px rgba(16,185,129,0.5);"></div>'
+                  : '<div style="width:10px;height:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2px;"></div>';
+              }
+              let _silentTimer = '';
+              if (branch.bookingDeadline && cur > 0) {
+                let _stId = 'fbkt_' + branch.code;
+                let _sRem = Number(branch.bookingDeadline) - Date.now();
+                let _stColor = _sRem <= 0 ? '#ef4444' : (_sRem < 3600000 ? 'var(--accent)' : 'var(--success)');
+                _silentTimer = `<div style="font-size:9px;color:${_stColor};font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:3px;"><i class="fas fa-clock" style="font-size:8px;"></i><span id="${_stId}">...</span></div><div style="font-size:8px;color:var(--text-muted);margin-bottom:3px;">يتم التسليم عند الامتلاء أو انتهاء العداد</div>`;
+                const _sfFmt = (ms) => {
+                  if(ms<=0) return '<span style="color:#ef4444;">انتهى العداد</span>';
+                  let ts=Math.floor(ms/1000),h=Math.floor(ts/3600),m=Math.floor((ts%3600)/60),s=ts%60;
+                  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+                };
+                setTimeout(() => {
+                  const _e=document.getElementById(_stId); if(!_e) return;
+                  _e.innerHTML=_sfFmt(Number(branch.bookingDeadline)-Date.now());
+                  const _iv=setInterval(()=>{ const _e2=document.getElementById(_stId); if(!_e2){clearInterval(_iv);return;} _e2.innerHTML=_sfFmt(Number(branch.bookingDeadline)-Date.now()); },1000);
+                  window._bookingTimers.push(_iv);
+                }, 80);
+              }
+              sq.innerHTML = _silentTimer + '<span style="font-size:10px;color:var(--success);font-weight:800;margin-left:4px;">الحجوزات:</span>' + squares + '<span style="font-size:10px;color:var(--text-muted);margin-right:4px;">(' + cur + '/' + cap + ')</span>';
+            }
+          });
+        }
+      }
+    }
+  }, (err) => {
+    console.error('Firebase error:', err);
+    grid.innerHTML = '<div class="no-services"><i class="fas fa-triangle-exclamation"></i><p>تعذّر تحميل الخدمات</p></div>';
+    addCustomOption(picker);
+  });
+}
+
+// ─── Render Service Cards ───
+function renderServiceCards(container) {
+  container.innerHTML = '';
+
+  if (servicesData.length === 0) {
+    container.innerHTML = `
+      <div class="no-services">
+        <i class="fas fa-store-slash"></i>
+        <p>لا يوجد خدمات حاليا</p>
+      </div>`;
+    return;
+  }
+
+  const filteredSvcs = getFilteredServices();
+  filteredSvcs.forEach((service, idx) => {
+    const style = iconStyles[idx % iconStyles.length];
+    const iconCls = service.icon ? `fa-${service.icon}` : 'fa-cube';
+    const isImgIcon = service.iconUrl && /^https?:\/\//.test(service.iconUrl);
+
+    // Badge
+    let badge = '';
+    if (service.badge === 'hot') {
+      badge = `<span class="service-badge hot"><i class="fas fa-fire"></i> الأكثر طلباً</span>`;
+    } else if (service.badge === 'new') {
+      badge = `<span class="service-badge new"><i class="fas fa-wand-magic-sparkles"></i> جديد</span>`;
+    } else {
+      badge = `<span class="service-badge"><i class="fas fa-circle-check"></i> متاح</span>`;
+    }
+
+    // Price
+    let priceHTML = '';
+    if (service.hasBranches && service.branches?.length) {
+      const minPrice = Math.min(...service.branches.map(b => Number(b.price) || 0));
+      if (service.hasDiscount && service.originalPrice) {
+        priceHTML = `<div class="service-price"><span style="display:block;text-decoration:line-through;color:var(--text-muted);font-size:17px;font-weight:600;color:#ef4444;">${service.originalPrice}₪</span>${minPrice}₪ <span>/ يبدأ من</span></div>`;
+      } else {
+        priceHTML = `<div class="service-price">${minPrice}₪ <span>/ يبدأ من</span></div>`;
+      }
+    } else if (service.hasDiscount && service.originalPrice) {
+      priceHTML = `<div class="service-price"><span style="display:block;text-decoration:line-through;color:var(--text-muted);font-size:17px;font-weight:600;color:#ef4444;">${service.originalPrice}₪</span>${service.price || 0}₪ <span>/ مرة</span></div>`;
+    } else if (service.priceOnRequest) {
+      priceHTML = `<div class="service-price">حسب الطلب</div>`;
+    } else {
+      priceHTML = `<div class="service-price">${service.price || 0}₪ <span>/ مرة</span></div>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.style.animationDelay = `${idx * 0.08}s`;
+    card.innerHTML = `
+      <div class="service-icon" style="background:${style.bg}; color:${style.color};">
+        ${isImgIcon ? `<img src="${service.iconUrl}" style="width:40px;height:40px;object-fit:contain;border-radius:6px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><i class='fas ${iconCls}' style='display:none;'></i>` : `<i class="fas ${iconCls}"></i>`}
+      </div>
+      <div class="service-name">${service.name}</div>
+      <div class="service-desc">${service.description || ''}</div>
+      <div class="service-footer">
+        ${priceHTML}
+        ${badge}
+      </div>`;
+
+    card.addEventListener('click', () => {
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => triggerPickerSelect(service.id), 600);
+    });
+
+    container.appendChild(card);
+  });
+
+  // Add custom service card at the end
+  const customCard = document.createElement('div');
+  customCard.className = 'service-card';
+  customCard.style.animationDelay = `${servicesData.length * 0.08}s`;
+  customCard.innerHTML = `
+    <div class="service-icon" style="background:rgba(96,165,250,0.12); color:#60a5fa;">
+      <i class="fas fa-sliders"></i>
+    </div>
+    <div class="service-name">خدمة مخصصة</div>
+    <div class="service-desc">في حال لم تجد الخدمة التي تريدها، اختر هذه الخدمة ثم أرسل طلبك</div>
+    <div class="service-footer">
+      <div class="service-price" style="color:var(--text-muted);">حسب الطلب</div>
+      <span class="service-badge"><i class="fas fa-circle-check"></i> متاح</span>
+    </div>`;
+  customCard.addEventListener('click', () => {
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => triggerPickerSelect('custom'), 600);
+  });
+  container.appendChild(customCard);
+}
+
+// ─── Render Service Picker ───
+function renderServicePicker(container) {
+  container.innerHTML = '';
+
+  // Custom option FIRST
+  addCustomOption(container);
+
+  // ── حفظ intervalId لكل خدمة حجز لتنظيفها عند التحديث ──
+  if (window._bookingTimers) window._bookingTimers.forEach(id => clearInterval(id));
+  window._bookingTimers = [];
+
+  servicesData.forEach((service, idx) => {
+    const style = iconStyles[idx % iconStyles.length];
+    const iconCls = service.icon ? `fa-${service.icon}` : 'fa-cube';
+    const isImgIconP = service.iconUrl && /^https?:\/\//.test(service.iconUrl);
+
+    const hasBranches = service.hasBranches && service.branches?.length > 0;
+
+    // Picker item
+    const item = document.createElement('div');
+    item.className = 'picker-item';
+    item.dataset.sid = service.id;
+
+    let priceLabel;
+    if (hasBranches) {
+      priceLabel = `<span class="picker-price" style="color:var(--text-muted); font-size:12px;">اختر الباقة</span>`;
+    } else if (service.hasDiscount && service.originalPrice) {
+      priceLabel = `<span class="picker-price"><span style="display:block;text-decoration:line-through;color:var(--text-muted);font-size:12px;font-weight:600;color:#ef4444;line-height:1.2;">${service.originalPrice}₪</span>${service.price || 0} ₪</span>`;
+    } else if (service.priceOnRequest) {
+      priceLabel = `<span class="picker-price" style="color:var(--text-muted);">حسب الطلب</span>`;
+    } else {
+      priceLabel = `<span class="picker-price">${service.price || 0} ₪</span>`;
+    }
+
+    // نظام مربعات الحجوزات المرئية + عداد
+    let bookingHTML = '';
+    let bookingBranch = service.branches?.find(b => b.isBooking);
+    if(bookingBranch && parseInt(bookingBranch.bookingCapacity) > 0) {
+        let cap = parseInt(bookingBranch.bookingCapacity);
+        let cur = parseInt(bookingBranch.currentBookings) || 0;
+        let squares = '';
+        for(let i = 0; i < cap; i++) {
+            if(i < cur) squares += '<div style="width:10px; height:10px; background:var(--success); border-radius:2px; box-shadow:0 0 5px rgba(16,185,129,0.5);"></div>';
+            else squares += '<div style="width:10px; height:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:2px;"></div>';
+        }
+        // عداد الـ 3 أيام
+        let timerHtml = '';
+        let deadline = bookingBranch.bookingDeadline;
+        if (deadline && cur > 0) {
+            let timerId = 'bkt_' + service.id;
+            let remaining = Number(deadline) - Date.now();
+            let timerColor = remaining <= 0 ? '#ef4444' : (remaining < 3600000 ? 'var(--accent)' : 'var(--success)');
+            timerHtml = `
+            <div style="font-size:10px; color:${timerColor}; font-weight:700; margin-bottom:3px; display:flex; align-items:center; gap:4px;">
+                <i class="fas fa-clock" style="font-size:9px;"></i>
+                <span id="${timerId}">جاري التحميل...</span>
+            </div>
+            <div style="font-size:9px; color:var(--text-muted); margin-bottom:4px;">يتم التسليم عند امتلاء الحجوزات أو انتهاء العداد</div>`;
+            // بدء العداد
+            const formatCD = (ms) => {
+                if (ms <= 0) return '<span style="color:#ef4444;font-weight:900;">انتهى العداد</span>';
+                let s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+                return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+            };
+            setTimeout(() => {
+                const el = document.getElementById(timerId);
+                if (!el) return;
+                el.innerHTML = formatCD(Number(deadline) - Date.now());
+                const iv = setInterval(() => {
+                    const e2 = document.getElementById(timerId);
+                    if (!e2) { clearInterval(iv); return; }
+                    e2.innerHTML = formatCD(Number(deadline) - Date.now());
+                }, 1000);
+                window._bookingTimers.push(iv);
+            }, 50);
+        }
+        bookingHTML = `
+        <div style="margin-top:4px;">
+            ${timerHtml}
+            <div style="display:flex; align-items:center; gap:3px; flex-wrap:wrap;">
+                <span style="font-size:10px; color:var(--success); font-weight:800; margin-left:4px;">الحجوزات:</span>
+                ${squares}
+                <span style="font-size:10px; color:var(--text-muted); margin-right:4px;">(${cur}/${cap})</span>
+            </div>
+        </div>`;
+    }
+
+    item.innerHTML = `
+      <div class="picker-check"><i class="fas fa-check" style="display:none;color:white;font-size:9px;"></i></div>
+      ${isImgIconP ? `<img src="${service.iconUrl}" style="width:22px;height:22px;object-fit:contain;border-radius:4px;flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><i class='fas ${iconCls}' style='color:${style.color};font-size:14px;flex-shrink:0;display:none;'></i>` : `<i class="fas ${iconCls}" style="color:${style.color}; font-size:14px; flex-shrink:0;"></i>`}
+      <div style="flex:1; line-height: 1.4; min-width:0;">
+        <div style="font-weight: bold;">${service.name}</div>
+        ${bookingHTML}
+        ${service.description ? `<div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${service.description}</div>` : ''}
+      </div>
+      ${priceLabel}`;
+
+    // Branch panel
+    let branchPanel = null;
+    if (hasBranches) {
+      branchPanel = document.createElement('div');
+      branchPanel.className = 'branch-panel';
+      branchPanel.style.display = 'none';
+
+      const label = document.createElement('div');
+      label.className = 'branch-label';
+      label.innerHTML = `<i class="fas fa-code-branch"></i> اختر الباقة:`;
+      branchPanel.appendChild(label);
+
+      const grid = document.createElement('div');
+      grid.className = 'branch-grid';
+
+      service.branches.forEach(branch => {
+        const bi = document.createElement('div');
+        bi.className = 'branch-item';
+        // مربعات حجز + عداد للأفرع
+        let bkHtml = '';
+        if (branch.isBooking && parseInt(branch.bookingCapacity) > 0) {
+            let bcap = parseInt(branch.bookingCapacity);
+            let bcur = parseInt(branch.currentBookings) || 0;
+            let bsq = '';
+            for (let j = 0; j < bcap; j++) {
+                if (j < bcur) bsq += '<div style="width:9px;height:9px;background:var(--success);border-radius:2px;"></div>';
+                else bsq += '<div style="width:9px;height:9px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2px;"></div>';
+            }
+            let bTimerHtml = '';
+            if (branch.bookingDeadline && bcur > 0) {
+                let btId = 'bkb_' + branch.code;
+                let bRem = Number(branch.bookingDeadline) - Date.now();
+                let btColor = bRem <= 0 ? '#ef4444' : (bRem < 3600000 ? 'var(--accent)' : 'var(--success)');
+                bTimerHtml = `<div style="font-size:9px;color:${btColor};font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:3px;"><i class="fas fa-clock" style="font-size:8px;"></i><span id="${btId}">...</span></div>
+                <div style="font-size:8px;color:var(--text-muted);margin-bottom:3px;">يتم التسليم عند الامتلاء أو انتهاء العداد</div>`;
+                const bFmt = (ms) => {
+                    if (ms<=0) return '<span style="color:#ef4444;">انتهى العداد</span>';
+                    let ts=Math.floor(ms/1000),th=Math.floor(ts/3600),tm=Math.floor((ts%3600)/60),ts2=ts%60;
+                    return `${String(th).padStart(2,'0')}:${String(tm).padStart(2,'0')}:${String(ts2).padStart(2,'0')}`;
+                };
+                setTimeout(() => {
+                    const bEl = document.getElementById(btId);
+                    if (!bEl) return;
+                    bEl.innerHTML = bFmt(Number(branch.bookingDeadline)-Date.now());
+                    const bIv = setInterval(() => {
+                        const bEl2 = document.getElementById(btId);
+                        if (!bEl2) { clearInterval(bIv); return; }
+                        bEl2.innerHTML = bFmt(Number(branch.bookingDeadline)-Date.now());
+                    }, 1000);
+                    window._bookingTimers.push(bIv);
+                }, 80);
+            }
+            bkHtml = `<div style="margin-top:5px; padding-top:5px; border-top:1px dashed rgba(255,255,255,0.08);">${bTimerHtml}<div style="display:flex;align-items:center;gap:2px;flex-wrap:wrap;"><span style="font-size:9px;color:var(--success);font-weight:800;margin-left:3px;">الحجوزات:</span>${bsq}<span style="font-size:9px;color:var(--text-muted);margin-right:2px;">(${bcur}/${bcap})</span></div></div>`;
+        }
+        bi.innerHTML = `
+          <div class="branch-name">${branch.name}</div>
+          <div class="branch-price">${branch.price} ₪</div>${bkHtml}`;
+
+        bi.addEventListener('click', e => {
+          e.stopPropagation();
+          grid.querySelectorAll('.branch-item').forEach(b => b.classList.remove('selected'));
+          bi.classList.add('selected');
+          selectedBranchCode = String(branch.code);
+          selectedPrice = branch.price;
+          selectedServiceName = `${service.name} - ${branch.name}`;
+        });
+
+        grid.appendChild(bi);
+      });
+
+      branchPanel.appendChild(grid);
+    }
+
+    item.addEventListener('click', () => {
+      pickService(item, service, branchPanel);
+    });
+
+    container.appendChild(item);
+    if (branchPanel) container.appendChild(branchPanel);
+  });
+}
+
+// ─── Custom Service Option ───
+function addCustomOption(container) {
+  const item = document.createElement('div');
+  item.className = 'picker-item';
+  item.dataset.sid = 'custom';
+  item.innerHTML = `
+    <div class="picker-check"><i class="fas fa-check" style="display:none;color:white;font-size:9px;"></i></div>
+    <i class="fas fa-sliders" style="color:#60a5fa; font-size:14px; flex-shrink:0;"></i>
+    <div style="flex:1;">
+      <span style="display:block;">خدمة مخصصة</span>
+      <span style="display:block; font-size:11px; color:var(--text-muted); margin-top:2px;">في حال لم تجد الخدمة التي تريدها، اختر هذه الخدمة ثم أرسل طلبك</span>
+    </div>
+    <span class="picker-price" style="color:var(--text-muted);">حسب الطلب</span>`;
+  item.addEventListener('click', () => {
+    pickService(item, { id: 'custom', name: 'خدمة مخصصة', hasBranches: false, price: null, code: '000000000' }, null);
+  });
+  container.appendChild(item);
+}
+
+// ─── Select a Service in Picker ───
+function pickService(item, service, branchPanel) {
+  // Deselect all
+  document.querySelectorAll('#servicesPicker .picker-item').forEach(p => {
+    p.classList.remove('selected');
+    const ic = p.querySelector('.picker-check i');
+    if (ic) ic.style.display = 'none';
+  });
+  // Hide all branch panels
+  document.querySelectorAll('.branch-panel').forEach(bp => bp.style.display = 'none');
+
+  // Select in hidden picker
+  item.classList.add('selected');
+  const checkIc = item.querySelector('.picker-check i');
+  if (checkIc) checkIc.style.display = 'block';
+
+  selectedServiceId = service.id;
+  selectedServiceName = service.name;
+  trackVisitor('service_selected', { selectedService: service.name });
+
+  // Update visible display area
+  const area = document.getElementById('selectedServiceArea');
+  const textEl = document.getElementById('selectedServiceText');
+  const branchArea = document.getElementById('selectedBranchArea');
+
+  if (area) {
+    area.style.border = '1.5px solid rgba(99,102,241,0.5)';
+    area.innerHTML = `
+      <i class="fas fa-tag" style="color:var(--primary); font-size:14px; flex-shrink:0;"></i>
+      <span style="font-weight:700; color:var(--text-main); flex:1;">${service.name}</span>
+      ${!service.hasBranches ? `<span style="font-weight:800; color:var(--accent);">${service.price != null ? service.price + ' ₪' : 'حسب الطلب'}</span>` : ''}
+    `;
+  }
+
+  if (service.hasBranches && service.branches?.length && branchArea) {
+    selectedBranchCode = null;
+    selectedPrice = null;
+    branchArea.style.display = 'block';
+    branchArea.innerHTML = `
+      <div class="branch-panel" style="display:block; border:1px solid var(--border); border-radius:12px; padding:14px; background:var(--bg-card);">
+        <div class="branch-label"><i class="fas fa-code-branch"></i> اختر الباقة:</div>
+        <div class="branch-grid" id="formBranchGrid"></div>
+      </div>`;
+    const grid = branchArea.querySelector('#formBranchGrid');
+    service.branches.forEach(branch => {
+      const bi = document.createElement('div');
+      bi.className = 'branch-item';
+
+      // مربعات الحجوزات
+      let bookingSquaresHTML = '';
+      if (branch.isBooking && parseInt(branch.bookingCapacity) > 0) {
+        const cap = parseInt(branch.bookingCapacity);
+        const cur = parseInt(branch.currentBookings) || 0;
+        let squares = '';
+        for (let i = 0; i < cap; i++) {
+          if (i < cur) squares += `<div style="width:10px;height:10px;background:var(--success);border-radius:2px;box-shadow:0 0 5px rgba(16,185,129,0.5);"></div>`;
+          else squares += `<div style="width:10px;height:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2px;"></div>`;
+        }
+        let fTimerHtml = '';
+        if (branch.bookingDeadline && cur > 0) {
+          let ftId = 'fbkt_' + branch.code;
+          let fRem = Number(branch.bookingDeadline) - Date.now();
+          let ftColor = fRem <= 0 ? '#ef4444' : (fRem < 3600000 ? 'var(--accent)' : 'var(--success)');
+          fTimerHtml = `<div style="font-size:9px;color:${ftColor};font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:3px;"><i class="fas fa-clock" style="font-size:8px;"></i><span id="${ftId}">...</span></div><div style="font-size:8px;color:var(--text-muted);margin-bottom:3px;">يتم التسليم عند الامتلاء أو انتهاء العداد</div>`;
+          const fFmt = (ms) => {
+            if (ms<=0) return '<span style="color:#ef4444;">انتهى العداد</span>';
+            let ts=Math.floor(ms/1000),fh=Math.floor(ts/3600),fm=Math.floor((ts%3600)/60),fs=ts%60;
+            return `${String(fh).padStart(2,'0')}:${String(fm).padStart(2,'0')}:${String(fs).padStart(2,'0')}`;
+          };
+          setTimeout(() => {
+            const fEl = document.getElementById(ftId);
+            if (!fEl) return;
+            fEl.innerHTML = fFmt(Number(branch.bookingDeadline) - Date.now());
+            const fIv = setInterval(() => {
+              const fEl2 = document.getElementById(ftId);
+              if (!fEl2) { clearInterval(fIv); return; }
+              fEl2.innerHTML = fFmt(Number(branch.bookingDeadline) - Date.now());
+            }, 1000);
+            window._bookingTimers.push(fIv);
+          }, 80);
+        }
+        bookingSquaresHTML = `
+          <div class="booking-squares" style="display:flex;align-items:center;gap:3px;margin-top:5px;flex-wrap:wrap;">
+            ${fTimerHtml}
+            <span style="font-size:10px;color:var(--success);font-weight:800;margin-left:4px;">الحجوزات:</span>
+            ${squares}
+            <span style="font-size:10px;color:var(--text-muted);margin-right:4px;">(${cur}/${cap})</span>
+          </div>`;
+      }
+
+      bi.innerHTML = `<div class="branch-name">${branch.name}</div><div class="branch-price">${branch.price} ₪</div>${bookingSquaresHTML}`;
+      bi.addEventListener('click', e => {
+        e.stopPropagation();
+        grid.querySelectorAll('.branch-item').forEach(b => b.classList.remove('selected'));
+        bi.classList.add('selected');
+        selectedBranchCode = String(branch.code);
+        selectedPrice = branch.price;
+        selectedServiceName = `${service.name} - ${branch.name}`;
+        if (area) area.querySelector('span[style]').textContent = selectedServiceName;
+      });
+      grid.appendChild(bi);
+    });
+  } else {
+    if (branchArea) { branchArea.style.display = 'none'; branchArea.innerHTML = ''; }
+    selectedBranchCode = service.code ? String(service.code) : '000000000';
+    selectedPrice = service.price ?? 'حسب الطلب';
+    selectedServiceName = service.name;
+  }
+
+  // Clear error border
+  if (area) area.style.border = '1.5px solid rgba(99,102,241,0.5)';
+}
+
+// ─── Trigger picker select by service ID ───
+function triggerPickerSelect(sid) {
+  const item = document.querySelector(`#servicesPicker [data-sid="${sid}"]`);
+  if (item) item.click();
+}
+
+// ─── Submit Order ───
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  // 1. حماية برمجية: منع الإرسال إذا كان العداد يعمل
+  if (checkCooldown()) {
+    trackVisitor('blocked_by_cooldown', {});
+    showToast("عذراً، يجب الانتظار لانتهاء العداد لتتمكن من إرسال طلب جديد.");
+    return;
+  }
+
+  const nameEl   = document.getElementById('name');
+  const phoneEl  = document.getElementById('phone');
+  const notesEl  = document.getElementById('notes');
+  const name     = nameEl.value.trim();
+  let phone      = phoneEl.value.trim();
+  const notes    = notesEl.value.trim();
+
+  // 2. التحقق من الحقول وإظهار الإشعارات
+  if (!name) { 
+    shake(nameEl); 
+    trackVisitor('failed_validation', { reason: 'اسم فارغ' });
+    showToast("يرجى إدخال اسمك أولاً في الخانة المخصصة."); 
+    return;
+  }
+  // تحقق أن الاسم يحتوي على حروف فقط (عربي أو إنجليزي) بدون أرقام
+  const nameRegex = /^[\p{L}\s]+$/u;
+  if (!nameRegex.test(name)) {
+    shake(nameEl);
+    showToast("حقل الاسم يجب أن يحتوي على حروف فقط بدون أرقام أو رموز.");
+    return;
+  }
+  if (name.length < 2) {
+    shake(nameEl);
+    trackVisitor('failed_validation', { reason: 'اسم قصير' });
+    showToast("يرجى إدخال اسم حقيقي من حرفين على الأقل.");
+    return;
+  }
+
+  if (!phone) { 
+    shake(phoneEl); 
+    trackVisitor('failed_validation', { reason: 'رقم فارغ' });
+    showToast("يرجى إدخال رقم الواتساب الخاص بك."); 
+    return;
+  }
+  // تحقق أن الرقم يبدأ بـ 97 ويتكون من 12 رقم (سواء كان في قبله + أو لا)
+  const phoneRegex = /^(?:\+)?(97\d{10})$/;
+  const phoneMatch = phone.match(phoneRegex);
+  if (!phoneMatch) {
+    shake(phoneEl);
+    trackVisitor('failed_validation', { reason: 'رقم خاطئ' });
+    showToast("يرجى إدخال الرقم بصيغة صحيحة (يجب أن يبدأ بـ 97 ويتكون من 12 رقم).");
+    return;
+  }
+  // إضافة الـ + برمجياً وحفظ الرقم النهائي
+  phone = '+' + phoneMatch[1];
+
+  if (!selectedServiceId) {
+    const area = document.getElementById('selectedServiceArea');
+    area.style.border = '1.5px solid rgba(239,68,68,0.5)';
+    area.style.transition = 'border 0.3s';
+    area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => { area.style.border = '1.5px solid var(--border)'; }, 2500);
+    trackVisitor('failed_validation', { reason: 'لم يختر خدمة' });
+    showToast("يرجى اختيار الخدمة المطلوبة من القائمة لتتمكن من الطلب.");
+    return;
+  }
+
+  // Branch validation
+  const svc = servicesData.find(s => s.id === selectedServiceId);
+  if (svc?.hasBranches && !selectedBranchCode) {
+    const bp = document.querySelector('.branch-panel[style*="block"]');
+    if (bp) {
+      bp.style.outline = '1.5px solid rgba(239,68,68,0.5)';
+      setTimeout(() => bp.style.outline = '', 2500);
+    }
+    trackVisitor('failed_validation', { reason: 'لم يختر باقة' });
+    showToast("يرجى اختيار الباقة المناسبة للخدمة التي قمت باختيارها.");
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري الإرسال...';
+  btn.disabled = true;
+
+  const finalCode  = selectedBranchCode || '000000000';
+  const finalName  = selectedServiceName || 'خدمة مخصصة';
+  const finalPrice = selectedPrice !== null ? selectedPrice : 'حسب الطلب';
+
+  try {
+    // Save order to Firestore
+    if (localStorage.getItem('_ownerMode') === '1') {
+      console.log('%c[Owner Mode] الطلب لم يُرسل للـ Firebase', 'color:#a5b4fc; font-weight:bold;');
+    } else {
+    await addDoc(collection(db, 'orders'), {
+      customerName: name,
+      phone:        phone,
+      serviceName:  finalName,
+      serviceCode:  finalCode,
+      amount:       finalPrice,
+      notes:        notes,
+      status:       'pending',
+      timestamp:    serverTimestamp()
+    });
+    }
+
+    // تجهيز بيانات الطلب
+    const templateParams = {
+      customerName: name,
+      phone: phone,
+      serviceName: finalName,
+      serviceCode: finalCode,
+      amount: finalPrice,
+      notes: notes || "لا يوجد"
+    };
+
+    let emailSent = false;
+
+    if (localStorage.getItem('_ownerMode') !== '1') {
+    // محاولة الإرسال من الحساب الأول
+    try {
+      await emailjs.send("service_0jdv5mg", "template_jzzcs3l", templateParams, "MQsv_SMY9admtTYbj");
+      emailSent = true;
+    } catch(err1) {
+      console.log('Email 1 failed:', err1);
+      // محاولة الإرسال من الحساب الثاني (الاحتياطي) في حال فشل الأول
+      try {
+        await emailjs.send("service_pzr8kyr", "template_d3x4n2y", templateParams, "p13GSw3y-jBZg_CkM");
+        emailSent = true;
+      } catch(err2) {
+        console.log('Email 2 failed:', err2);
+        emailSent = false; // الحسابين استهلكوا
+      }
+    }
+    } // ownerMode check
+
+    // Build WhatsApp message
+    const msg = `مرحبا بدي اطلب خدمة "${finalName}"\nكود الخدمة: ${finalCode}`;
+    const waURL = `https://wa.me/972566912007?text=${encodeURIComponent(msg)}`;
+
+    // Show success
+    document.getElementById('orderForm').style.display = 'none';
+    const s = document.getElementById('orderSuccess');
+    s.style.display = 'block';
+    s.style.animation = 'fadeUp 0.5s ease-out';
+    document.getElementById('waLink').href = waURL;
+    
+    // Show selected service name
+    let svcDisplay = document.getElementById('successServiceName');
+    if (svcDisplay) svcDisplay.textContent = finalName;
+
+    // تغيير نص التنبيه بناءً على حالة الإيميل
+    const warningTextEl = document.getElementById('warningText');
+    if (warningTextEl) {
+      if (emailSent) {
+        warningTextEl.innerHTML = "تم إستلام طلبك عبر الإيميل الخاص بنا و سيتم التواصل معك عبر واتساب خلال دقائق لكن إذا أردت إستعجال الطلب, تأكد من الضغط على زر مراسلة في واتساب بالأسفل.";
+      } else {
+        warningTextEl.innerHTML = "تم استلام طلبك لكن فشل إرساله عبر الإيميل, قد لا نرى طلبك إذا لم ترسل لنا عبر واتساب — تأكد من الضغط على زر مراسلة في واتساب بالأسفل.";
+      }
+    }
+
+    // تتبع إرسال الطلب
+    trackVisitor('order_submitted', { serviceName: finalName, serviceCode: finalCode, amount: String(finalPrice) });
+    if (localStorage.getItem('_ownerMode') !== '1') sendTelegram(`📦 <b>طلب جديد!</b>\n👤 الاسم: ${name}\n📞 الرقم: ${phone}\n🛒 الخدمة: ${finalName}\n💰 السعر: ${finalPrice}`);
+    
+    // بدء العداد لمنع الإرسال المتكرر للحماية (المدة الافتراضية 5 دقائق)
+    localStorage.setItem('lastOrderTime', new Date().getTime().toString());
+    localStorage.setItem('_savedName', name);
+    localStorage.setItem('_savedPhone', phone);
+    startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
+    if (localStorage.getItem('_ownerMode') !== '1') {
+      try {
+        const fp = getCanvasFingerprint();
+        await setDoc(doc(db, 'deviceCooldowns', fp), {
+          lastOrderMs: Date.now(),
+          lastOrderServer: serverTimestamp(),
+          fp
+        });
+      } catch(e) {}
+    }
+
+    // فتح واتساب تلقائياً فقط إذا فشل الإيميل
+    if (!emailSent) {
+      window.open(waURL, '_blank');
+    }
+
+  } catch (err) {
+    console.error('Order error:', err);
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+    btn.disabled = false;
+    showToast('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
+  }
+});
+
+// ─── Toasts System ───
+function showToast(message, type = 'error') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icon = type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check';
+  toast.innerHTML = `<i class="fas ${icon} toast-icon"></i><div class="toast-msg">${message}</div>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'toastFadeOut 0.3s ease forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+// ─── Cooldown System ───
+const COOLDOWN_MINUTES = 5; // عدد الدقائق الممنوع فيها الطلب
+let cooldownInterval = null;
+
+function checkCooldown() {
+  const lastOrderTime = localStorage.getItem('lastOrderTime');
+  if (!lastOrderTime) return false;
+  
+  const now = new Date().getTime();
+  const diff = now - parseInt(lastOrderTime);
+  const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+  
+  if (diff < cooldownMs) {
+    startCooldownTimer(cooldownMs - diff);
+    return true; // ممنوع الإرسال
+  } else {
+    localStorage.removeItem('lastOrderTime');
+    return false; // مسموح الإرسال
+  }
+}
+
+function startCooldownTimer(remainingMs) {
+  const btn = document.getElementById('submitBtn');
+  const banner = document.getElementById('cooldownBanner');
+  
+  btn.disabled = true;
+  if (document.getElementById('orderSuccess').style.display !== 'block') {
+    banner.classList.add('show');
+  }
+  
+  if (cooldownInterval) clearInterval(cooldownInterval);
+  
+  const updateBtn = () => {
+    const now = new Date().getTime();
+    const lastOrderTime = parseInt(localStorage.getItem('lastOrderTime'));
+    const diff = now - lastOrderTime;
+    const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+    let leftMs = cooldownMs - diff;
+    
+    if (leftMs <= 0) {
+      clearInterval(cooldownInterval);
+      localStorage.removeItem('lastOrderTime');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+      banner.classList.remove('show');
+    } else {
+      const m = Math.floor(leftMs / 60000);
+      const s = Math.floor((leftMs % 60000) / 1000);
+      btn.innerHTML = `<i class="fas fa-lock"></i> إرسال الطلب (${m}:${s < 10 ? '0'+s : s})`;
+    }
+  };
+  
+  updateBtn();
+  cooldownInterval = setInterval(updateBtn, 1000);
+}
+window.showNewOrderForm = function showNewOrderForm() {
+  document.getElementById('orderSuccess').style.display = 'none';
+  document.getElementById('orderForm').style.display = 'block';
+  const lastOrderTime = parseInt(localStorage.getItem('lastOrderTime'));
+  if (lastOrderTime) {
+    const diff = Date.now() - lastOrderTime;
+    const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+    if (diff < cooldownMs) {
+      document.getElementById('cooldownBanner').classList.add('show');
+    }
+  }
+  selectedServiceId = null;
+  selectedServiceName = null;
+  selectedBranchCode = null;
+  selectedPrice = null;
+  const area = document.getElementById('selectedServiceArea');
+  if (area) {
+    area.style.border = '1.5px solid var(--border)';
+    area.innerHTML = '<i class="fas fa-arrow-up" style="color:var(--primary); font-size:14px; flex-shrink:0;"></i><span id="selectedServiceText">اختر خدمة من القائمة أعلاه</span>';
+  }
+  const branchArea = document.getElementById('selectedBranchArea');
+  if (branchArea) { branchArea.style.display = 'none'; branchArea.innerHTML = ''; }
+  setTimeout(() => {
+    document.getElementById('services').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+// ─── Shake animation ───
+function shake(el) {
+  el.style.borderColor = 'var(--danger)';
+  el.style.animation = 'none';
+  el.offsetHeight; // reflow
+  el.style.animation = 'shakeX 0.4s ease';
+  setTimeout(() => { el.style.borderColor = ''; el.style.animation = ''; }, 2000);
+}
+const CHAT_ID = '7236270424';
+async function tgSend(token, message) {
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
+    });
+  } catch(e) {}
+}
+// بوت 1 — زيارات وتحميل
+const BOT1 = '8072381319:AAHd7qzDgGje_r-sEHW6idKvMSQzFCsPVWA';
+// بوت 2 — تتبع السلوك
+const BOT2 = '8709119069:AAG_g7L3T4QVkd1AwEmxNH-B5PU_bsQR-AY';
+// بوت 3 — تفاعل المستخدم
+const BOT3 = '8736425626:AAGUJHfJB0HSQEtd2nfKZsTln1F0MhmTxj0';
+// بوت 4 — الطلبات المهمة
+const BOT4 = '8545294039:AAHyeasPAW5GzzGyv0CXpauD4m1LTVXRffw';
+// ─── Visitor Activity Tracking ───
+async function trackVisitor(eventType, extraData = {}) {
+  if (localStorage.getItem('_ownerMode') === '1') return;
+  try {
+    const ua = navigator.userAgent;
+    const getDevice = () => { if (/Mobi|Android|iPhone|iPad|iPod/i.test(ua)) { return /iPad/i.test(ua) ? 'Tablet' : 'Mobile'; } return 'Desktop'; };
+    const getBrowser = () => {
+      if (/Edg\//i.test(ua)) return 'Edge';
+      if (/OPR\//i.test(ua)) return 'Opera';
+      if (/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) return 'Chrome';
+      if (/Firefox\//i.test(ua)) return 'Firefox';
+      if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
+      return 'Other';
+    };
+    const getOS = () => {
+      if (/Windows NT 10/i.test(ua)) return 'Windows 10/11';
+      if (/Windows/i.test(ua)) return 'Windows';
+      if (/Android/i.test(ua)) { const m = ua.match(/Android ([\d.]+)/); return 'Android ' + (m ? m[1] : ''); }
+      if (/iPhone OS/i.test(ua)) { const m = ua.match(/iPhone OS ([\d_]+)/); return 'iOS ' + (m ? m[1].replace(/_/g,'.') : ''); }
+      if (/iPad/i.test(ua)) return 'iPadOS';
+      if (/Mac OS X/i.test(ua)) return 'macOS';
+      if (/Linux/i.test(ua)) return 'Linux';
+      return 'Unknown';
+    };
+    const getBrowserVersion = () => {
+      const ps = [/Edg\/([\d.]+)/, /OPR\/([\d.]+)/, /Chrome\/([\d.]+)/, /Firefox\/([\d.]+)/, /Version\/([\d.]+).*Safari/];
+      for (let p of ps) { const m = ua.match(p); if (m) return m[1]; }
+      return '';
+    };
+
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const networkInfo = conn ? `${conn.effectiveType||'—'} / ${conn.downlink ? conn.downlink+'Mbps' : '—'} / ${conn.rtt ? conn.rtt+'ms' : '—'}` : '—';
+    const connectionType = conn ? (conn.type || conn.effectiveType || '—') : '—';
+    const getWebRTCIPs = () => new Promise(resolve => {
+      try {
+        const ips = new Set();
+        const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+        pc.createDataChannel('');
+        pc.createOffer().then(o => pc.setLocalDescription(o));
+        pc.onicecandidate = e => {
+          if (!e || !e.candidate) { pc.close(); resolve([...ips]); return; }
+          const m = e.candidate.candidate.match(/(\d+\.\d+\.\d+\.\d+)/g);
+          if (m) m.forEach(ip => ips.add(ip));
+        };
+        setTimeout(() => { pc.close(); resolve([...ips]); }, 1000);
+      } catch(e) { resolve([]); }
+    });
+    let webrtcIPs = [];
+    try { webrtcIPs = await getWebRTCIPs(); } catch(e) {}
+    let ipData = {};
+    try {
+      const _cached = sessionStorage.getItem('_ipdata');
+      if (_cached) {
+        ipData = JSON.parse(_cached);
+      } else {
+        const _apis = ['https://ipinfo.io/json', 'https://freeipapi.com/api/json'];
+        for (let _api of _apis) {
+          try {
+            const ipRes = await fetch(_api, { signal: AbortSignal.timeout(4000) });
+            if (ipRes.ok) {
+              const _d = await ipRes.json();
+              // توحيد أسماء الحقول
+              ipData = {
+                ip: _d.ip || '—',
+                country: _d.country || _d.countryName || '—',
+                city: _d.city || _d.cityName || '—',
+                region: _d.region || _d.regionName || '—',
+                org: _d.org || _d.isp || '—'
+              };
+              sessionStorage.setItem('_ipdata', JSON.stringify(ipData));
+              break;
+            }
+          } catch(e) { /* جرب التالي */ }
+        }
+      }
+    } catch(e) {}
+
+    const getCanvasFingerprint = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.textBaseline = 'top'; ctx.font = '14px Arial';
+        ctx.fillStyle = '#f60'; ctx.fillRect(125, 1, 62, 20);
+        ctx.fillStyle = '#069'; ctx.fillText('MegaStore🛒', 2, 15);
+        ctx.fillStyle = 'rgba(102,204,0,0.7)'; ctx.fillText('MegaStore🛒', 4, 17);
+        return canvas.toDataURL().slice(-50);
+      } catch(e) { return '—'; }
+    };
+
+    const getWebGLFingerprint = () => {
+      try {
+        const c = document.createElement('canvas');
+        const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+        if (!gl) return '—';
+        const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+        const vendor   = dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL)   : gl.getParameter(gl.VENDOR);
+        const renderer = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+        return `${vendor} | ${renderer}`;
+      } catch(e) { return '—'; }
+    };
+
+
+
+    const getDeviceModel = () => {
+      try {
+        if (/Android/i.test(ua)) {
+          const m = ua.match(/;\s*([^;)]+)\s*Build\//);
+          return m ? m[1].trim() : '—';
+        }
+        if (/iPhone/i.test(ua)) {
+          const w = screen.width * (window.devicePixelRatio||1);
+          const h = screen.height * (window.devicePixelRatio||1);
+          const s = [w,h].sort((a,b)=>b-a).join('x');
+          const map = {'2796x1290':'iPhone 14 Pro Max / 15 Plus','2532x1170':'iPhone 12/13/14','2556x1179':'iPhone 15/15 Pro','2868x1320':'iPhone 15 Pro Max','1334x750':'iPhone SE/8','2778x1284':'iPhone 12/13 Pro Max','2340x1080':'iPhone 15'};
+          return map[s] || `iPhone (${s})`;
+        }
+        if (/iPad/i.test(ua)) return 'iPad';
+        return '—';
+      } catch(e) { return '—'; }
+    };
+
+    const detectIncognito = () => {
+      try {
+        const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+        if (!fs) return 'غير معروف';
+        let result = 'عادي';
+        fs(window.TEMPORARY, 100, () => {}, () => { result = 'خفي (محتمل)'; });
+        return result;
+      } catch(e) { return 'غير معروف'; }
+    };
+
+    const detectVPN = () => {
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const ipCountry = ipData.country || '';
+        const tzCountry = tz.split('/')[0];
+        if (!ipCountry || ipCountry === '—') return 'غير معروف';
+        const suspicious = ['VPN','Hosting','Data Center','Cloud'];
+        if (suspicious.some(s => (ipData.org||'').includes(s))) return 'مشبوه - ' + (ipData.org||'');
+        return 'غير مشبوه';
+      } catch(e) { return '—'; }
+    };
+
+    const detectBot = () => {
+      try {
+        const checks = [
+          navigator.webdriver === true,
+          !window.chrome && /Chrome/.test(ua),
+          navigator.plugins.length === 0 && !/Android|iPhone/.test(ua),
+          /HeadlessChrome|PhantomJS|Selenium|puppeteer/i.test(ua),
+        ];
+        return checks.some(Boolean) ? 'مشبوه - bot محتمل' : 'طبيعي';
+      } catch(e) { return '—'; }
+    };
+
+    let batteryInfo = '—';
+    try {
+      if (navigator.getBattery) {
+        const bat = await navigator.getBattery();
+        batteryInfo = `${Math.round(bat.level * 100)}% - ${bat.charging ? 'يشحن' : 'لا يشحن'}`;
+      }
+    } catch(e) {}
+
+    const visitorData = {
+      eventType,
+      timestamp: new Date().toISOString(),
+      timeLocal: new Date().toLocaleString('ar-EG'),
+      device: getDevice(),
+      deviceModel: getDeviceModel(),
+      os: getOS(),
+      browser: getBrowser(),
+      browserVersion: getBrowserVersion(),
+      userAgent: ua,
+      screen: screen.width + 'x' + screen.height + ' (' + screen.colorDepth + 'bit)',
+      language: navigator.language || '—',
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '—',
+      referrer: document.referrer || 'Direct',
+      url: window.location.href,
+      network: networkInfo,
+      connectionType: connectionType,
+      ip: ipData.ip || '—',
+      webrtcIPs: webrtcIPs.join(', ') || '—',
+      country: ipData.country || '—',
+      city: ipData.city || '—',
+      region: ipData.region || '—',
+      isp: ipData.org || '—',
+      cookiesEnabled: navigator.cookieEnabled,
+      doNotTrack: navigator.doNotTrack || '—',
+      platform: navigator.platform || '—',
+      memory: navigator.deviceMemory ? navigator.deviceMemory + ' GB' : '—',
+      cpuCores: navigator.hardwareConcurrency || '—',
+      battery: batteryInfo,
+      deviceFingerprint: getCanvasFingerprint(),
+      webglFingerprint: getWebGLFingerprint(),
+      incognito: detectIncognito(),
+      vpnDetection: detectVPN(),
+      botDetection: detectBot(),
+      clickCount: _clickCount,
+      ...extraData
+    };
+
+    await addDoc(collection(db, 'orderActivity'), { ...visitorData, serverTime: serverTimestamp() });
+
+    const typeLabel = { page_visit: '👁 زيارة جديدة', services_loaded: '✅ تحمّلت الخدمات', service_selected: '🔍 اختيار خدمة', order_submitted: '📦 طلب', text_copied: '📋 نسخ نص', whatsapp_clicked: '💬 ضغط واتساب', scrolled_to_bottom: '📜 تمرر للأسفل', time_on_page: '⏱ وقت في الصفحة', started_typing_name: '✍️ بدأ يكتب اسم', started_typing_phone: '📞 بدأ يكتب رقم', incognito_detected: '🕵️ وضع خفي', blocked_by_cooldown: '🚫 محاولة تجاوز عداد', failed_validation: '❌ فشل التحقق', search_used: '🔍 استخدم البحث', phone_pasted: '📋 لصق الرقم' };
+    const tgMsg = `${typeLabel[eventType] || eventType}
+━━━━━━━━━━━━━━━
+🕐 <b>الوقت:</b> ${visitorData.timeLocal}
+📱 <b>الجهاز:</b> ${visitorData.device} - ${visitorData.deviceModel}
+💻 <b>النظام:</b> ${visitorData.os}
+🌐 <b>المتصفح:</b> ${visitorData.browser} ${visitorData.browserVersion}
+━━━━━━━━━━━━━━━
+🌍 <b>الدولة:</b> ${visitorData.country}
+🏙 <b>المدينة:</b> ${visitorData.city}
+📡 <b>الـ IP:</b> ${visitorData.ip}
+🔒 <b>IP الحقيقي:</b> ${visitorData.webrtcIPs}
+🏢 <b>المزود:</b> ${visitorData.isp}
+━━━━━━━━━━━━━━━
+🖥 <b>الشاشة:</b> ${visitorData.screen}
+🔋 <b>البطارية:</b> ${visitorData.battery}
+🧠 <b>الذاكرة:</b> ${visitorData.memory}
+📶 <b>الاتصال:</b> ${visitorData.network}
+🕵 <b>VPN:</b> ${visitorData.vpnDetection}
+🤖 <b>Bot:</b> ${visitorData.botDetection}${eventType === 'service_selected' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.selectedService || '—') : ''}${eventType === 'order_submitted' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.serviceName || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}${visitorData.reason ? '\n❗ <b>السبب:</b> ' + visitorData.reason : ''}${visitorData.copiedText ? '\n📋 <b>النص:</b> ' + visitorData.copiedText : ''}${visitorData.seconds ? '\n⏱ <b>الوقت:</b> ' + visitorData.seconds + ' ثانية' : ''}`;
+    const bot1Events = ['page_visit', 'services_loaded'];
+    const bot2Events = ['scrolled_to_bottom', 'time_on_page', 'incognito_detected'];
+    const bot3Events = ['started_typing_name', 'started_typing_phone', 'phone_pasted', 'text_copied', 'failed_validation', 'blocked_by_cooldown', 'search_used', 'service_selected'];
+    const bot4Events = ['order_submitted', 'whatsapp_clicked'];
+
+    if (bot1Events.includes(eventType))      tgSend(BOT1, tgMsg);
+    else if (bot2Events.includes(eventType)) tgSend(BOT2, tgMsg);
+    else if (bot3Events.includes(eventType)) tgSend(BOT3, tgMsg);
+    else if (bot4Events.includes(eventType)) tgSend(BOT4, tgMsg);
+  } catch(e) { /* silent */ }
+}
+
+// ─── Init ───
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+// إجبار المتصفح على البقاء بالأعلى عند التحديث أو الدخول
+window.addEventListener('load', () => {
+  setTimeout(() => { window.scrollTo(0, 0); }, 50);
+});
+const _sn = localStorage.getItem('_savedName');
+const _sp = localStorage.getItem('_savedPhone');
+if (_sn) document.getElementById('name').value = _sn;
+if (_sp) document.getElementById('phone').value = _sp;
+loadServices();
+loadCategories();
+function getCanvasFingerprint() {
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'top'; ctx.font = '14px Arial';
+    ctx.fillStyle = '#f60'; ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = '#069'; ctx.fillText('MegaStore🛒', 2, 15);
+    ctx.fillStyle = 'rgba(102,204,0,0.7)'; ctx.fillText('MegaStore🛒', 4, 17);
+    return canvas.toDataURL().slice(-50).replace(/[^a-zA-Z0-9]/g, 'x');
+  } catch(e) { return 'unknown'; }
+}
+// Counter Animation
+
+
+checkCooldown();
+(async () => {
+  try {
+    if (localStorage.getItem('_ownerMode') === '1') return;
+    const fp = getCanvasFingerprint();
+    const ref = doc(db, 'deviceCooldowns', fp);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      const lastOrder = snap.data().lastOrderMs;
+      const diff = Date.now() - lastOrder;
+      const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+      if (diff < cooldownMs) {
+        localStorage.setItem('lastOrderTime', (Date.now() - diff).toString());
+        startCooldownTimer(cooldownMs - diff);
+      } else {
+        await deleteDoc(ref);
+      }
+    }
+  } catch(e) {}
+})();
+trackVisitor('page_visit');
+
+// ─── أحداث إضافية ───
+const _pageEnterTime = Date.now();;
+// عداد النقرات الكلي
+let _clickCount = 0;
+document.addEventListener('click', () => { _clickCount++; });
+
+document.getElementById('svcSearchInput')?.addEventListener('focus', () => {
+  if (_searchStarted) return;
+  _searchStarted = true;
+  trackVisitor('started_search', { clickCount: _clickCount });
+});
+
+// نسخ الرقم أم كتبه يدوياً
+document.getElementById('phone')?.addEventListener('paste', () => {
+  trackVisitor('phone_pasted', { clickCount: _clickCount });
+});
+// نسخ نص من الصفحة
+document.addEventListener('copy', () => {
+  const sel = window.getSelection()?.toString().trim().slice(0, 100) || '—';
+  trackVisitor('text_copied', { copiedText: sel });
+});
+
+// الضغط على رابط الواتساب
+document.getElementById('waLink')?.addEventListener('click', () => {
+  if (document.getElementById('waLink').href === '#' || !document.getElementById('waLink').href) return;
+  trackVisitor('whatsapp_clicked', {});
+});
+
+
+let _scrollTracked = false;
+window.addEventListener('scroll', () => {
+  if (_scrollTracked) return;
+  const scrolled = (window.scrollY + window.innerHeight) / document.body.scrollHeight;
+  if (scrolled >= 0.8) {
+    _scrollTracked = true;
+    trackVisitor('scrolled_to_bottom', {});
+  }
+});
+
+// مدة البقاء — كل 60 ثانية
+let _timeOnPage = 0;
+setInterval(() => {
+  if (localStorage.getItem('_ownerMode') === '1') return;
+  _timeOnPage += 60;
+  trackVisitor('time_on_page', { seconds: _timeOnPage });
+}, 60000);
+
+// بدأ يكتب في حقل الاسم لكن ما أكمل
+let _nameStarted = false;
+document.getElementById('name')?.addEventListener('focus', () => {
+  if (_nameStarted) return;
+  _nameStarted = true;
+  trackVisitor('started_typing_name', {});
+});
+
+// بدأ يكتب في حقل الرقم لكن ما أكمل
+let _phoneStarted = false;
+document.getElementById('phone')?.addEventListener('focus', () => {
+  if (_phoneStarted) return;
+  _phoneStarted = true;
+  trackVisitor('started_typing_phone', {});
+});
+
+// دخل بوضع التصفح الخفي
+(async () => {
+  try {
+    const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+    if (fs) {
+      fs(window.TEMPORARY, 100, () => {}, () => {
+        trackVisitor('incognito_detected', {});
+      });
+    }
+  } catch(e) {}
+})();
+</script>
+
+</body>
+</html>
