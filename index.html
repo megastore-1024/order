@@ -2358,7 +2358,7 @@ async function trackVisitor(eventType, extraData = {}) {
       if (_cached) {
         ipData = JSON.parse(_cached);
       } else {
-        const _apis = ['https://ipinfo.io/json', 'https://freeipapi.com/api/json'];
+        const _apis = ['https://ipinfo.io/json', 'https://freeipapi.com/api/json', 'https://ip-api.com/json?fields=query,country,city,regionName,org'];
         for (let _api of _apis) {
           try {
             const ipRes = await fetch(_api, { signal: AbortSignal.timeout(4000) });
@@ -2366,7 +2366,7 @@ async function trackVisitor(eventType, extraData = {}) {
               const _d = await ipRes.json();
               // توحيد أسماء الحقول
               ipData = {
-                ip: _d.ip || '—',
+                ip: _d.ip || _d.query || '—',
                 country: _d.country || _d.countryName || '—',
                 city: _d.city || _d.cityName || '—',
                 region: _d.region || _d.regionName || '—',
