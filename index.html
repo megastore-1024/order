@@ -2372,7 +2372,9 @@ async function trackVisitor(eventType, extraData = {}) {
                 region: _d.region || _d.regionName || '—',
                 org: _d.org || _d.isp || '—'
               };
-              sessionStorage.setItem('_ipdata', JSON.stringify(ipData));
+              if (ipData.country && ipData.country !== '—') {
+                sessionStorage.setItem('_ipdata', JSON.stringify(ipData));
+              }
               break;
             }
           } catch(e) { /* جرب التالي */ }
