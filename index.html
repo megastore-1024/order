@@ -2295,9 +2295,22 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     }
 
     const templateParams = { customerName: name, phone, serviceName: finalName, serviceCode: finalCode, amount: finalPrice, notes: notes || 'لا يوجد' };
+    let emailSent = false;
+    
     if (localStorage.getItem('_ownerMode') !== '1') {
-      try { await emailjs.send("service_0jdv5mg", "template_jzzcs3l", templateParams, "MQsv_SMY9admtTYbj"); }
-      catch(e1) { try { await emailjs.send("service_pzr8kyr", "template_d3x4n2y", templateParams, "p13GSw3y-jBZg_CkM"); } catch(e2) {} }
+      try { 
+        await emailjs.send("service_0jdv5mg", "template_jzzcs3l", templateParams, "MQsv_SMY9admtTYbj"); 
+        emailSent = true;
+      }
+      catch(e1) { 
+        try { 
+          await emailjs.send("service_pzr8kyr", "template_d3x4n2y", templateParams, "p13GSw3y-jBZg_CkM"); 
+          emailSent = true;
+        } 
+        catch(e2) {
+          emailSent = false;
+        } 
+      }
     }
 
     localStorage.setItem('_savedName', name);
@@ -2314,13 +2327,29 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     document.getElementById('modalBranchArea').style.display = 'none';
     document.querySelector('.form-title').style.display = 'none';
     document.querySelector('.form-sub').style.display = 'none';
+
+    // تغيير النصوص واستخدام أيقونات FontAwesome بدل الإيموجي
+    const modalSuccessTitle = document.querySelector('#modalSuccess .success-title');
+    const modalSuccessSub = document.querySelector('#modalSuccess .success-sub');
+    
+    if (emailSent) {
+      modalSuccessTitle.innerHTML = 'تم استلام طلبك بنجاح! <i class="fas fa-circle-check" style="color: #10b981; margin-right: 6px;"></i>';
+      modalSuccessSub.innerHTML = "سيقوم فريقنا بالتواصل معك قريباً. وإذا كنت ترغب في تنفيذ طلبك بشكل فوري، تفضل بمراسلتنا الآن عبر زر الواتساب بالأسفل.";
+    } else {
+      modalSuccessTitle.innerHTML = 'تم تسجيل طلبك في نظامنا! <i class="fas fa-triangle-exclamation" style="color: #f59e0b; margin-right: 6px;"></i>';
+      modalSuccessSub.innerHTML = "خطوة أخيرة هامة: يرجى تأكيد الطلب بالضغط على زر الواتساب بالأسفل لضمان تنفيذه فوراً وعدم تأخره.";
+    }
+
     document.getElementById('modalSuccess').style.display = 'block';
 
     trackVisitor('order_submitted', { serviceName: finalName, amount: finalPrice });
     localStorage.setItem('lastOrderTime', new Date().getTime().toString());
     startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
-    // تم نقل تحديث العداد إلى الأعلى ليعمل مع الطلب في نفس اللحظة
-    window.open(waURL, '_blank');
+    
+    // فتح واتساب تلقائياً فقط إذا فشل الإيميل
+    if (!emailSent) {
+      window.open(waURL, '_blank');
+    }
 
   } catch(err) {
     btn.innerHTML = `<i class="fas fa-lock"></i> يرجى الانتظار`;
