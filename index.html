@@ -2216,6 +2216,25 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     showToast("عذراً، يجب الانتظار لانتهاء العداد.");
     return;
   }
+  // ✅ تحقق ثانوي من Firebase لمنع تجاوز العداد بمسح localStorage
+  if (localStorage.getItem('_ownerMode') !== '1') {
+    try {
+      const fp = getCanvasFingerprint();
+      const cdSnap = await getDoc(doc(db, 'deviceCooldowns', fp));
+      if (cdSnap.exists()) {
+        const lastOrderMs = cdSnap.data().lastOrderMs;
+        const diffMs = Date.now() - lastOrderMs;
+        const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+        if (diffMs < cooldownMs) {
+          localStorage.setItem('lastOrderTime', lastOrderMs.toString());
+          startCooldownTimer(cooldownMs - diffMs);
+          trackVisitor('blocked_by_cooldown', { reason: 'firebase_check' });
+          showToast("عذراً، يجب الانتظار لانتهاء العداد.");
+          return;
+        }
+      }
+    } catch(e) {}
+  }
 
   const nameEl  = document.getElementById('modalName');
   const phoneEl = document.getElementById('modalPhone');
@@ -2282,6 +2301,7 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     document.getElementById('modalSuccess').style.display = 'block';
 
     trackVisitor('order_submitted', { serviceName: finalName, amount: finalPrice });
+    localStorage.setItem('lastOrderTime', new Date().getTime().toString());
     startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
     if (localStorage.getItem('_ownerMode') !== '1') {
       setDoc(doc(db, 'deviceCooldowns', getCanvasFingerprint()), { lastOrderMs: Date.now() });
@@ -2302,6 +2322,25 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
     trackVisitor('blocked_by_cooldown', {});
     showToast("عذراً، يجب الانتظار لانتهاء العداد لتتمكن من إرسال طلب جديد.");
     return;
+  }
+  // ✅ تحقق ثانوي من Firebase لمنع تجاوز العداد بمسح localStorage
+  if (localStorage.getItem('_ownerMode') !== '1') {
+    try {
+      const fp = getCanvasFingerprint();
+      const cdSnap = await getDoc(doc(db, 'deviceCooldowns', fp));
+      if (cdSnap.exists()) {
+        const lastOrderMs = cdSnap.data().lastOrderMs;
+        const diffMs = Date.now() - lastOrderMs;
+        const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+        if (diffMs < cooldownMs) {
+          localStorage.setItem('lastOrderTime', lastOrderMs.toString());
+          startCooldownTimer(cooldownMs - diffMs);
+          trackVisitor('blocked_by_cooldown', { reason: 'firebase_check' });
+          showToast("عذراً، يجب الانتظار لانتهاء العداد لتتمكن من إرسال طلب جديد.");
+          return;
+        }
+      }
+    } catch(e) {}
   }
 
   const nameEl   = document.getElementById('name');
@@ -2534,12 +2573,18 @@ function startCooldownTimer(remainingMs) {
   
   if (cooldownInterval) clearInterval(cooldownInterval);
   
+  const _timerStartMs = Date.now();
   const updateBtn = () => {
     const now = new Date().getTime();
-    const lastOrderTime = parseInt(localStorage.getItem('lastOrderTime'));
-    const diff = now - lastOrderTime;
-    const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
-    let leftMs = cooldownMs - diff;
+    const storedTime = localStorage.getItem('lastOrderTime');
+    let leftMs;
+    if (storedTime) {
+      const lastOrderTime = parseInt(storedTime);
+      const cooldownMs = COOLDOWN_MINUTES * 60 * 1000;
+      leftMs = cooldownMs - (now - lastOrderTime);
+    } else {
+      leftMs = remainingMs - (now - _timerStartMs);
+    }
     
     if (leftMs <= 0) {
       clearInterval(cooldownInterval);
