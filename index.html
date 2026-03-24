@@ -1468,7 +1468,8 @@ import {
   onSnapshot,
   query,
   orderBy,
-  where
+  where,
+  writeBatch
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ─── Firebase Init ───
@@ -2273,12 +2274,24 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
 
   try {
     if (localStorage.getItem('_ownerMode') !== '1') {
-      const userFp = getCanvasFingerprint(); // جلب بصمة الجهاز
-      await addDoc(collection(db, 'orders'), {
+      const userFp = getCanvasFingerprint();
+      const batch = writeBatch(db);
+      
+      const newOrderRef = doc(collection(db, 'orders'));
+      batch.set(newOrderRef, {
         customerName: name, phone, serviceName: finalName,
         serviceCode: finalCode, amount: finalPrice,
         notes, status: 'pending', timestamp: serverTimestamp(), fp: userFp
       });
+      
+      const cooldownRef = doc(db, 'deviceCooldowns', userFp);
+      batch.set(cooldownRef, {
+        lastOrderMs: Date.now(),
+        lastOrderServer: serverTimestamp(),
+        fp: userFp
+      });
+      
+      await batch.commit(); // إرسال الطلب والعداد معاً في نفس اللحظة
     }
     }
 
@@ -2307,14 +2320,7 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     trackVisitor('order_submitted', { serviceName: finalName, amount: finalPrice });
     localStorage.setItem('lastOrderTime', new Date().getTime().toString());
     startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
-    if (localStorage.getItem('_ownerMode') !== '1') {
-      const userFp = getCanvasFingerprint();
-      setDoc(doc(db, 'deviceCooldowns', userFp), {
-        lastOrderMs: Date.now(),
-        lastOrderServer: serverTimestamp(),
-        fp: userFp
-      });
-    }
+    // تم نقل تحديث العداد إلى الأعلى ليعمل مع الطلب في نفس اللحظة
     window.open(waURL, '_blank');
 
   } catch(err) {
@@ -2435,18 +2441,30 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
     if (localStorage.getItem('_ownerMode') === '1') {
       console.log('%c[Owner Mode] الطلب لم يُرسل للـ Firebase', 'color:#a5b4fc; font-weight:bold;');
     } else {
-    const userFp = getCanvasFingerprint(); // جلب بصمة الجهاز
-    await addDoc(collection(db, 'orders'), {
-      customerName: name,
-      phone:        phone,
-      serviceName:  finalName,
-      serviceCode:  finalCode,
-      amount:       finalPrice,
-      notes:        notes,
-      status:       'pending',
-      timestamp:    serverTimestamp(),
-      fp:           userFp // إرسال البصمة مع الطلب
-    });
+      const userFp = getCanvasFingerprint();
+      const batch = writeBatch(db);
+      
+      const newOrderRef = doc(collection(db, 'orders'));
+      batch.set(newOrderRef, {
+        customerName: name,
+        phone:        phone,
+        serviceName:  finalName,
+        serviceCode:  finalCode,
+        amount:       finalPrice,
+        notes:        notes,
+        status:       'pending',
+        timestamp:    serverTimestamp(),
+        fp:           userFp
+      });
+      
+      const cooldownRef = doc(db, 'deviceCooldowns', userFp);
+      batch.set(cooldownRef, {
+        lastOrderMs: Date.now(),
+        lastOrderServer: serverTimestamp(),
+        fp: userFp
+      });
+      
+      await batch.commit();
     }
 
     // تجهيز بيانات الطلب
@@ -2513,16 +2531,7 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
     localStorage.setItem('_savedName', name);
     localStorage.setItem('_savedPhone', phone);
     startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
-    if (localStorage.getItem('_ownerMode') !== '1') {
-      try {
-        const fp = getCanvasFingerprint();
-        await setDoc(doc(db, 'deviceCooldowns', fp), {
-          lastOrderMs: Date.now(),
-          lastOrderServer: serverTimestamp(),
-          fp
-        });
-      } catch(e) {}
-    }
+    // تم نقل تحديث العداد إلى الأعلى ليعمل مع الطلب في نفس اللحظة
 
     // فتح واتساب تلقائياً فقط إذا فشل الإيميل
     if (!emailSent) {
