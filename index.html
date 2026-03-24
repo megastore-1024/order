@@ -2296,7 +2296,7 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
 });
 
 // ─── Submit Order ───
-document.getElementById('submitBtn').addEventListener('click', async () => {
+document.getElementById('submitBtn')?.addEventListener('click', async () => {
   // 1. حماية برمجية: منع الإرسال إذا كان العداد يعمل
   if (checkCooldown()) {
     trackVisitor('blocked_by_cooldown', {});
