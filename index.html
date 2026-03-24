@@ -2082,6 +2082,7 @@ function pickService(item, service, branchPanel) {
         selectedPrice = branch.price;
         selectedServiceName = `${service.name} - ${branch.name}`;
         if (area) area.querySelector('span[style]').textContent = selectedServiceName;
+        trackVisitor('package_selected', { selectedService: selectedServiceName, amount: branch.price });
       });
       grid.appendChild(bi);
     });
@@ -2171,6 +2172,7 @@ window.openOrderModal = function(service) {
         _modalServiceName = `${service.name} - ${branch.name}`;
         priceEl.textContent = branch.price + ' ₪';
         priceEl.style.color = 'var(--accent)';
+        trackVisitor('package_selected', { selectedService: _modalServiceName, amount: branch.price });
       });
       grid.appendChild(bi);
     });
@@ -2246,20 +2248,46 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
   let phone     = phoneEl.value.trim();
   const notes   = notesEl.value.trim();
 
-  if (!name) { shake(nameEl); showToast("يرجى إدخال اسمك أولاً."); return; }
+  if (!name) { 
+    shake(nameEl); 
+    trackVisitor('failed_validation', { reason: 'اسم فارغ (النافذة المنبثقة)' });
+    showToast("يرجى إدخال اسمك أولاً."); 
+    return; 
+  }
   const nameRegex = /^[\p{L}\s]+$/u;
-  if (!nameRegex.test(name)) { shake(nameEl); showToast("حقل الاسم يجب أن يحتوي على حروف فقط."); return; }
-  if (name.length < 2) { shake(nameEl); showToast("يرجى إدخال اسم حقيقي من حرفين على الأقل."); return; }
+  if (!nameRegex.test(name)) { 
+    shake(nameEl); 
+    trackVisitor('failed_validation', { reason: 'اسم يحتوي على أرقام أو رموز', typedName: name });
+    showToast("حقل الاسم يجب أن يحتوي على حروف فقط."); 
+    return; 
+  }
+  if (name.length < 2) { 
+    shake(nameEl); 
+    trackVisitor('failed_validation', { reason: 'اسم قصير جداً', typedName: name });
+    showToast("يرجى إدخال اسم حقيقي من حرفين على الأقل."); 
+    return; 
+  }
 
-  if (!phone) { shake(phoneEl); showToast("يرجى إدخال رقم الواتساب."); return; }
+  if (!phone) { 
+    shake(phoneEl); 
+    trackVisitor('failed_validation', { reason: 'رقم فارغ (النافذة المنبثقة)', typedName: name });
+    showToast("يرجى إدخال رقم الواتساب."); 
+    return; 
+  }
   const phoneRegex = /^(?:\+)?(97\d{10})$/;
   const phoneMatch = phone.match(phoneRegex);
-  if (!phoneMatch) { shake(phoneEl); showToast("يرجى إدخال الرقم بصيغة صحيحة (يبدأ بـ 97 ويتكون من 12 رقم)."); return; }
+  if (!phoneMatch) { 
+    shake(phoneEl); 
+    trackVisitor('failed_validation', { reason: 'رقم خاطئ', typedName: name, typedPhone: phone });
+    showToast("يرجى إدخال الرقم بصيغة صحيحة (يبدأ بـ 97 ويتكون من 12 رقم)."); 
+    return; 
+  }
   phone = '+' + phoneMatch[1];
 
   if (_modalService?.hasBranches && !_modalBranchCode) {
     const grid = document.getElementById('modalBranchGrid');
     if (grid) { grid.style.outline = '1.5px solid rgba(239,68,68,0.5)'; setTimeout(() => grid.style.outline = '', 2500); }
+    trackVisitor('failed_validation', { reason: 'لم يختر باقة', typedName: name, typedPhone: phone });
     showToast("يرجى اختيار الباقة المناسبة.");
     return;
   }
@@ -2400,36 +2428,34 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
     showToast("يرجى إدخال اسمك أولاً في الخانة المخصصة."); 
     return;
   }
-  // تحقق أن الاسم يحتوي على حروف فقط (عربي أو إنجليزي) بدون أرقام
   const nameRegex = /^[\p{L}\s]+$/u;
   if (!nameRegex.test(name)) {
     shake(nameEl);
+    trackVisitor('failed_validation', { reason: 'اسم يحتوي أرقام أو رموز', typedName: name });
     showToast("حقل الاسم يجب أن يحتوي على حروف فقط بدون أرقام أو رموز.");
     return;
   }
   if (name.length < 2) {
     shake(nameEl);
-    trackVisitor('failed_validation', { reason: 'اسم قصير' });
+    trackVisitor('failed_validation', { reason: 'اسم قصير جداً', typedName: name });
     showToast("يرجى إدخال اسم حقيقي من حرفين على الأقل.");
     return;
   }
 
   if (!phone) { 
     shake(phoneEl); 
-    trackVisitor('failed_validation', { reason: 'رقم فارغ' });
+    trackVisitor('failed_validation', { reason: 'رقم فارغ', typedName: name });
     showToast("يرجى إدخال رقم الواتساب الخاص بك."); 
     return;
   }
-  // تحقق أن الرقم يبدأ بـ 97 ويتكون من 12 رقم (سواء كان في قبله + أو لا)
   const phoneRegex = /^(?:\+)?(97\d{10})$/;
   const phoneMatch = phone.match(phoneRegex);
   if (!phoneMatch) {
     shake(phoneEl);
-    trackVisitor('failed_validation', { reason: 'رقم خاطئ' });
+    trackVisitor('failed_validation', { reason: 'رقم خاطئ', typedName: name, typedPhone: phone });
     showToast("يرجى إدخال الرقم بصيغة صحيحة (يجب أن يبدأ بـ 97 ويتكون من 12 رقم).");
     return;
   }
-  // إضافة الـ + برمجياً وحفظ الرقم النهائي
   phone = '+' + phoneMatch[1];
 
   if (!selectedServiceId) {
@@ -2438,12 +2464,11 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
     area.style.transition = 'border 0.3s';
     area.scrollIntoView({ behavior: 'smooth', block: 'center' });
     setTimeout(() => { area.style.border = '1.5px solid var(--border)'; }, 2500);
-    trackVisitor('failed_validation', { reason: 'لم يختر خدمة' });
+    trackVisitor('failed_validation', { reason: 'لم يختر خدمة', typedName: name, typedPhone: phone });
     showToast("يرجى اختيار الخدمة المطلوبة من القائمة لتتمكن من الطلب.");
     return;
   }
 
-  // Branch validation
   const svc = servicesData.find(s => s.id === selectedServiceId);
   if (svc?.hasBranches && !selectedBranchCode) {
     const bp = document.querySelector('.branch-panel[style*="block"]');
@@ -2451,11 +2476,10 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
       bp.style.outline = '1.5px solid rgba(239,68,68,0.5)';
       setTimeout(() => bp.style.outline = '', 2500);
     }
-    trackVisitor('failed_validation', { reason: 'لم يختر باقة' });
+    trackVisitor('failed_validation', { reason: 'لم يختر باقة', typedName: name, typedPhone: phone });
     showToast("يرجى اختيار الباقة المناسبة للخدمة التي قمت باختيارها.");
     return;
   }
-
   const btn = document.getElementById('submitBtn');
   btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري الإرسال...';
   btn.disabled = true;
@@ -2891,29 +2915,30 @@ async function trackVisitor(eventType, extraData = {}) {
 
     await addDoc(collection(db, 'orderActivity'), { ...visitorData, serverTime: serverTimestamp() });
 
-    const typeLabel = { page_visit: '👁 زيارة جديدة', services_loaded: '✅ تحمّلت الخدمات', service_selected: '🔍 اختيار خدمة', category_selected: '📂 اختيار قسم', order_submitted: '📦 طلب', text_copied: '📋 نسخ نص', whatsapp_clicked: '💬 ضغط واتساب', scrolled_to_bottom: '📜 تمرر للأسفل', time_on_page: '⏱ وقت في الصفحة', started_typing_name: '✍️ بدأ يكتب اسم', started_typing_phone: '📞 بدأ يكتب رقم', blocked_by_cooldown: '🚫 محاولة تجاوز عداد', failed_validation: '❌ فشل التحقق', search_used: '🔍 استخدم البحث', phone_pasted: '📋 لصق الرقم' };
+    const typeLabel = { page_visit: '👁 زيارة جديدة', services_loaded: '✅ تحمّلت الخدمات', service_selected: '🔍 اختيار خدمة', package_selected: '📦 اختيار باقة', category_selected: '📂 اختيار قسم', order_submitted: '📦 طلب', text_copied: '📋 نسخ نص', whatsapp_clicked: '💬 ضغط واتساب', scrolled_to_bottom: '📜 تمرر للأسفل', time_on_page: '⏱ وقت في الصفحة', started_typing_name: '✍️ كتب الاسم', started_typing_phone: '📞 كتب الرقم', blocked_by_cooldown: '🚫 تجاوز عداد', failed_validation: '❌ فشل إرسال الطلب', search_used: '🔍 استخدم البحث', phone_pasted: '📋 لصق الرقم' };
     const tgMsg = `${typeLabel[eventType] || eventType}
 ━━━━━━━━━━━━━━━
 🕐 <b>الوقت:</b> ${visitorData.timeLocal}
 📱 <b>الجهاز:</b> ${visitorData.device} - ${visitorData.deviceModel}
 💻 <b>النظام:</b> ${visitorData.os}
-🌐 <b>المتصفح:</b> ${visitorData.browser} ${visitorData.browserVersion}
+🌐 <b>المتصفح:</b> ${visitorData.browser}
 ━━━━━━━━━━━━━━━
-🌍 <b>الدولة:</b> ${visitorData.country}
-🏙 <b>المدينة:</b> ${visitorData.city}
+🌍 <b>الموقع:</b> ${visitorData.country} - ${visitorData.city}
 📡 <b>الـ IP:</b> ${visitorData.ip}
-🏢 <b>المزود:</b> ${visitorData.isp}
-━━━━━━━━━━━━━━━
-🖥 <b>الشاشة:</b> ${visitorData.screen}
-🔋 <b>البطارية:</b> ${visitorData.battery}
-🧠 <b>الذاكرة:</b> ${visitorData.memory}
-📶 <b>الاتصال:</b> ${visitorData.network}
 🕵 <b>VPN:</b> ${visitorData.vpnDetection}
-🤖 <b>Bot:</b> ${visitorData.botDetection}
-🪪 <b>معرّف الجهاز:</b> ${visitorData.visitorId || '—'}${eventType === 'service_selected' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.selectedService || '—') : ''}${eventType === 'order_submitted' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.serviceName || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}${visitorData.reason ? '\n❗ <b>السبب:</b> ' + visitorData.reason : ''}${visitorData.copiedText ? '\n📋 <b>النص:</b> ' + visitorData.copiedText : ''}${visitorData.seconds ? '\n⏱ <b>الوقت:</b> ' + visitorData.seconds + ' ثانية' : ''}`;
+🪪 <b>معرّف الجهاز:</b> ${visitorData.visitorId || '—'}
+${eventType === 'service_selected' ? '\n🛒 <b>الخدمة المختارة:</b> ' + (visitorData.selectedService || '—') : ''}
+${eventType === 'package_selected' ? '\n📦 <b>الباقة المختارة:</b> ' + (visitorData.selectedService || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}
+${eventType === 'order_submitted' ? '\n🛒 <b>الخدمة:</b> ' + (visitorData.serviceName || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}
+${visitorData.typedName ? '\n👤 <b>الاسم المدخل:</b> ' + visitorData.typedName : ''}
+${visitorData.typedPhone ? '\n📞 <b>الرقم المدخل:</b> ' + visitorData.typedPhone : ''}
+${visitorData.reason ? '\n❗ <b>السبب:</b> ' + visitorData.reason : ''}
+${visitorData.copiedText ? '\n📋 <b>النص:</b> ' + visitorData.copiedText : ''}
+${visitorData.seconds ? '\n⏱ <b>الوقت:</b> ' + visitorData.seconds + ' ثانية' : ''}`.trim();
+
     const bot1Events = ['page_visit', 'services_loaded'];
     const bot2Events = ['scrolled_to_bottom', 'time_on_page'];
-    const bot3Events = ['started_typing_name', 'started_typing_phone', 'phone_pasted', 'text_copied', 'failed_validation', 'blocked_by_cooldown', 'search_used', 'service_selected', 'category_selected'];
+    const bot3Events = ['started_typing_name', 'started_typing_phone', 'phone_pasted', 'text_copied', 'failed_validation', 'blocked_by_cooldown', 'search_used', 'service_selected', 'package_selected', 'category_selected'];
     const bot4Events = ['order_submitted', 'whatsapp_clicked'];
 
     if (bot1Events.includes(eventType))      tgSend(BOT1, tgMsg);
@@ -3041,29 +3066,28 @@ setInterval(() => {
   trackVisitor('time_on_page', { seconds: _timeOnPage });
 }, 60000);
 
-// بدأ يكتب في حقل الاسم — يبعت بعد 5 ثواني مع القيمة
-let _nameStarted = false;
-let _nameTimer = null;
-document.getElementById('name')?.addEventListener('focus', () => {
-  if (_nameStarted) return;
-  _nameStarted = true;
-  const el = document.getElementById('name');
-  _nameTimer = setTimeout(() => {
-    trackVisitor('started_typing_name', { typedName: el.value.trim() || '—' });
-  }, 5000);
+// تتبع كتابة الاسم بمجرد أن ينهي المستخدم الكتابة (في النافذتين)
+['name', 'modalName'].forEach(id => {
+  document.getElementById(id)?.addEventListener('blur', (e) => {
+    const val = e.target.value.trim();
+    if (val.length > 0) {
+      trackVisitor('started_typing_name', { typedName: val });
+    }
+  });
 });
 
-// بدأ يكتب في حقل الرقم — يبعت بعد 10 ثواني مع القيمة
-let _phoneStarted = false;
-let _phoneTimer = null;
-document.getElementById('phone')?.addEventListener('focus', () => {
-  if (_phoneStarted) return;
-  _phoneStarted = true;
-  const el = document.getElementById('phone');
-  _phoneTimer = setTimeout(() => {
-    trackVisitor('started_typing_phone', { typedPhone: el.value.trim() || '—' });
-  }, 10000);
+// تتبع كتابة الرقم بمجرد أن ينهي المستخدم الكتابة (في النافذتين)
+['phone', 'modalPhone'].forEach(id => {
+  document.getElementById(id)?.addEventListener('blur', (e) => {
+    const val = e.target.value.trim();
+    if (val.length > 0) {
+      trackVisitor('started_typing_phone', { typedPhone: val });
+    }
+  });
 });
+
+// ضبط تأخير إرسال الرسائل لعدم إزعاجك (تحديث الـ Cooldown)
+const _EVENT_COOLDOWNS = { service_selected: 5000, package_selected: 2000, failed_validation: 2000, order_submitted: 0, started_typing_name: 0, started_typing_phone: 0 };
 
 
 </script>
