@@ -2945,8 +2945,21 @@ function getCanvasFingerprint() {
     ctx.fillStyle = '#f60'; ctx.fillRect(125, 1, 62, 20);
     ctx.fillStyle = '#069'; ctx.fillText('MegaStore🛒', 2, 15);
     ctx.fillStyle = 'rgba(102,204,0,0.7)'; ctx.fillText('MegaStore🛒', 4, 17);
-    return canvas.toDataURL().slice(-50).replace(/[^a-zA-Z0-9]/g, 'x');
-  } catch(e) { return 'unknown'; }
+    
+    // جلب كود الصورة بالكامل
+    const data = canvas.toDataURL();
+    // أخذ 50 حرفاً من "منتصف" الكود لأنه الجزء الفريد الذي لا يتشابه أبداً
+    const mid = Math.floor(data.length / 2) - 25;
+    let fp = data.substr(mid, 50).replace(/[^a-zA-Z0-9]/g, 'x');
+    
+    // تأمين إضافي: التأكد من أن البصمة 50 حرفاً بالضبط لكي يقبلها الفايربيس
+    while(fp.length < 50) fp += 'x';
+    return fp.substring(0, 50);
+  } catch(e) { 
+    let fallback = 'unknown';
+    while(fallback.length < 50) fallback += 'x';
+    return fallback; 
+  }
 }
 // Counter Animation
 
