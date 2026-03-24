@@ -2273,11 +2273,13 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
 
   try {
     if (localStorage.getItem('_ownerMode') !== '1') {
+      const userFp = getCanvasFingerprint(); // جلب بصمة الجهاز
       await addDoc(collection(db, 'orders'), {
         customerName: name, phone, serviceName: finalName,
         serviceCode: finalCode, amount: finalPrice,
-        notes, status: 'pending', timestamp: serverTimestamp()
+        notes, status: 'pending', timestamp: serverTimestamp(), fp: userFp
       });
+    }
     }
 
     const templateParams = { customerName: name, phone, serviceName: finalName, serviceCode: finalCode, amount: finalPrice, notes: notes || 'لا يوجد' };
@@ -2306,7 +2308,12 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     localStorage.setItem('lastOrderTime', new Date().getTime().toString());
     startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
     if (localStorage.getItem('_ownerMode') !== '1') {
-      setDoc(doc(db, 'deviceCooldowns', getCanvasFingerprint()), { lastOrderMs: Date.now() });
+      const userFp = getCanvasFingerprint();
+      setDoc(doc(db, 'deviceCooldowns', userFp), {
+        lastOrderMs: Date.now(),
+        lastOrderServer: serverTimestamp(),
+        fp: userFp
+      });
     }
     window.open(waURL, '_blank');
 
