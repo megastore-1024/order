@@ -2293,7 +2293,6 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
       
       await batch.commit(); // إرسال الطلب والعداد معاً في نفس اللحظة
     }
-    }
 
     const templateParams = { customerName: name, phone, serviceName: finalName, serviceCode: finalCode, amount: finalPrice, notes: notes || 'لا يوجد' };
     if (localStorage.getItem('_ownerMode') !== '1') {
