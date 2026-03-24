@@ -1239,7 +1239,7 @@ window._hideLoader = function() {
 </a>
 
 <div id="cooldownBanner" class="cooldown-banner">
-  <i class="fas fa-clock"></i> عذراً، يجب الانتظار لانتهاء العداد لتتمكن من إرسال طلب جديد.
+  <i class="fas fa-clock"></i> عذراً، لا يمكنك إرسال طلب جديد حتى ينتهي العداد — <span id="bannerTimer"></span>
 </div>
 <div id="toastContainer" class="toast-container"></div>
 
@@ -2289,9 +2289,9 @@ document.getElementById('modalSubmitBtn').addEventListener('click', async () => 
     window.open(waURL, '_blank');
 
   } catch(err) {
-    btn.innerHTML = '<i class="fab fa-whatsapp" style="font-size:18px;"></i> إتمام الطلب عبر واتساب';
-    btn.disabled = false;
-    showToast("حدث خطأ، يرجى المحاولة مجدداً.");
+    btn.innerHTML = `<i class="fas fa-lock"></i> يرجى الانتظار`;
+    btn.disabled = true;
+    showToast("حدث خطأ أثناء الإرسال، يرجى الانتظار قبل المحاولة مجدداً.");
   }
 });
 
@@ -2481,8 +2481,8 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
 
   } catch (err) {
     console.error('Order error:', err);
-    btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
-    btn.disabled = false;
+    btn.innerHTML = `<i class="fas fa-lock"></i> إرسال الطلب`;
+    btn.disabled = true;
     showToast('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
   }
 });
@@ -2524,10 +2524,11 @@ function checkCooldown() {
 
 function startCooldownTimer(remainingMs) {
   const btn = document.getElementById('submitBtn');
+  const modalBtn = document.getElementById('modalSubmitBtn');
   const banner = document.getElementById('cooldownBanner');
   
-  btn.disabled = true;
-  if (document.getElementById('orderSuccess').style.display !== 'block') {
+  if (btn) btn.disabled = true;
+  if (document.getElementById('orderSuccess')?.style.display !== 'block') {
     banner.classList.add('show');
   }
   
@@ -2543,13 +2544,23 @@ function startCooldownTimer(remainingMs) {
     if (leftMs <= 0) {
       clearInterval(cooldownInterval);
       localStorage.removeItem('lastOrderTime');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب'; }
+      if (modalBtn && !document.getElementById('modalSuccess')?.style.display?.includes('block')) {
+        modalBtn.disabled = false;
+        modalBtn.style.display = '';
+        modalBtn.innerHTML = '<i class="fab fa-whatsapp" style="font-size:18px;"></i> إتمام الطلب عبر واتساب';
+      }
       banner.classList.remove('show');
     } else {
       const m = Math.floor(leftMs / 60000);
       const s = Math.floor((leftMs % 60000) / 1000);
-      btn.innerHTML = `<i class="fas fa-lock"></i> إرسال الطلب (${m}:${s < 10 ? '0'+s : s})`;
+      if (btn) btn.innerHTML = `<i class="fas fa-lock"></i> إرسال الطلب (${m}:${s < 10 ? '0'+s : s})`;
+      const bannerTimer = document.getElementById('bannerTimer');
+      if (bannerTimer) bannerTimer.textContent = `(${m}:${s < 10 ? '0'+s : s})`;
+      if (modalBtn && document.getElementById('modalSuccess')?.style.display !== 'block') {
+        modalBtn.disabled = true;
+        modalBtn.innerHTML = `<i class="fas fa-lock"></i> يرجى الانتظار (${m}:${s < 10 ? '0'+s : s})`;
+      }
     }
   };
   
@@ -2869,7 +2880,7 @@ checkCooldown();
 })();
 const _pageEnterTime = Date.now();;
 const _eventLastSent = {};
-const _EVENT_COOLDOWNS = { service_selected: 5000, order_submitted: 0 };
+const _EVENT_COOLDOWNS = { service_selected: 5000, order_submitted: 0, started_typing_name: 0, started_typing_phone: 0 };
 const _DEFAULT_COOLDOWN = 30000;
 let _visitorId = localStorage.getItem('_visitorId');
 if (!_visitorId) {
