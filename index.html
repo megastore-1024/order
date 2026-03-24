@@ -337,19 +337,19 @@ section { padding: 80px 24px; position: relative; z-index: 1; }
   justify-content: space-between;
 }
 .service-card::after {
-  content: '👆 اضغط للاختيار';
+  content: '\f0a9\00a0اضغط للاختيار';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   text-align: center;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   color: rgba(165, 180, 252, 0.9);
   background: rgba(99, 102, 241, 0.12);
   border-top: 1px solid rgba(99, 102, 241, 0.2);
   padding: 8px;
-  font-family: 'Tajawal', sans-serif;
+  font-family: 'Font Awesome 6 Free', 'Tajawal', sans-serif;
   transition: background 0.2s;
 }
 .service-card:hover::after, .service-card:active::after {
@@ -357,7 +357,7 @@ section { padding: 80px 24px; position: relative; z-index: 1; }
   color: white;
 }
 .service-card.selected-card::after {
-  content: '✓ تم الاختيار';
+  content: '\f058\00a0تم الاختيار';
   color: #34d399;
   background: rgba(16, 185, 129, 0.12);
   border-top-color: rgba(16, 185, 129, 0.2);
@@ -538,7 +538,9 @@ section { padding: 80px 24px; position: relative; z-index: 1; }
   position: relative;
 }
 .picker-item:not(.selected)::after {
-  content: 'اضغط';
+  content: '\f054\00a0اضغط';
+  font-family: 'Font Awesome 6 Free', 'Tajawal', sans-serif;
+  font-weight: 900;
   position: absolute;
   left: 10px;
   top: 50%;
@@ -554,7 +556,9 @@ section { padding: 80px 24px; position: relative; z-index: 1; }
   font-family: 'Tajawal', sans-serif;
 }
 .picker-item.selected::after {
-  content: '✓ تم';
+  content: '\f058\00a0تم';
+  font-family: 'Font Awesome 6 Free', 'Tajawal', sans-serif;
+  font-weight: 900;
   position: absolute;
   left: 10px;
   top: 50%;
