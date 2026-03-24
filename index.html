@@ -2428,6 +2428,7 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
     if (localStorage.getItem('_ownerMode') === '1') {
       console.log('%c[Owner Mode] الطلب لم يُرسل للـ Firebase', 'color:#a5b4fc; font-weight:bold;');
     } else {
+    const userFp = getCanvasFingerprint(); // جلب بصمة الجهاز
     await addDoc(collection(db, 'orders'), {
       customerName: name,
       phone:        phone,
@@ -2436,7 +2437,8 @@ document.getElementById('submitBtn')?.addEventListener('click', async () => {
       amount:       finalPrice,
       notes:        notes,
       status:       'pending',
-      timestamp:    serverTimestamp()
+      timestamp:    serverTimestamp(),
+      fp:           userFp // إرسال البصمة مع الطلب
     });
     }
 
