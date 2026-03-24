@@ -3011,7 +3011,7 @@ checkCooldown();
 })();
 const _pageEnterTime = Date.now();;
 const _eventLastSent = {};
-const _EVENT_COOLDOWNS = { service_selected: 5000, order_submitted: 0, started_typing_name: 0, started_typing_phone: 0 };
+const _EVENT_COOLDOWNS = { service_selected: 5000, package_selected: 2000, failed_validation: 2000, order_submitted: 0, started_typing_name: 0, started_typing_phone: 0 };
 const _DEFAULT_COOLDOWN = 30000;
 let _visitorId = localStorage.getItem('_visitorId');
 if (!_visitorId) {
@@ -3086,9 +3086,7 @@ setInterval(() => {
   });
 });
 
-// ضبط تأخير إرسال الرسائل لعدم إزعاجك (تحديث الـ Cooldown)
-const _EVENT_COOLDOWNS = { service_selected: 5000, package_selected: 2000, failed_validation: 2000, order_submitted: 0, started_typing_name: 0, started_typing_phone: 0 };
-
+// تم نقل تحديث الـ Cooldown إلى الأعلى
 
 </script>
 
