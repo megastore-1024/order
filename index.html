@@ -738,7 +738,83 @@ footer {
   gap: 8px;
 }
 .footer-sub { font-size: 13px; color: var(--text-muted); }
-
+/* ─── ORDER MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.modal-overlay.open .modal-box {
+  transform: translateY(0) scale(1);
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: rgba(239,68,68,0.12); color: #f87171; border-color: rgba(239,68,68,0.3); }
+.modal-service-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+.modal-service-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.modal-service-name { font-size: 15px; font-weight: 800; flex: 1; }
+.modal-service-price { font-size: 17px; font-weight: 900; color: var(--accent); }
+@media (max-width: 768px) {
+  .modal-box { padding: 22px 16px 28px; max-height: 95vh; border-radius: 22px; }
+  .modal-close { top: 12px; left: 12px; }
+}
 /* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -1417,7 +1493,62 @@ window._hideLoader = function() {
     </div>
   </div>
 </section>
+<!-- ─── ORDER MODAL ─── -->
+<div class="modal-overlay" id="orderModal" onclick="handleModalOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeOrderModal()"><i class="fas fa-xmark"></i></button>
 
+    <div class="form-title" style="margin-bottom:6px;">
+      <i class="fas fa-pen-to-square" style="color:var(--primary);font-size:20px;"></i>
+      تفاصيل طلبك
+    </div>
+    <div class="form-sub">جميع الحقول مطلوبة لمعالجة طلبك</div>
+
+    <!-- معلومات الخدمة المختارة -->
+    <div class="modal-service-header" id="modalServiceHeader">
+      <div class="modal-service-icon" id="modalServiceIcon"></div>
+      <div class="modal-service-name" id="modalServiceName">—</div>
+      <div class="modal-service-price" id="modalServicePrice"></div>
+    </div>
+
+    <!-- الباقات -->
+    <div id="modalBranchArea" style="display:none; margin-bottom:18px;"></div>
+
+    <div class="form-row" style="margin-bottom:0;">
+      <div class="form-group">
+        <label class="form-label">الاسم</label>
+        <input type="text" class="form-input" id="modalName" placeholder="اسمك الأول">
+      </div>
+      <div class="form-group">
+        <label class="form-label">رقم الواتساب</label>
+        <input type="tel" class="form-input" id="modalPhone" placeholder="+972 5x xxx xxxx">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ملاحظات إضافية (اختياري)</label>
+      <textarea class="form-textarea" id="modalNotes" placeholder="أي تفاصيل إضافية..."></textarea>
+    </div>
+
+    <button class="submit-btn" id="modalSubmitBtn" style="background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 8px 25px rgba(37,211,102,0.35);">
+      <i class="fab fa-whatsapp" style="font-size:18px;"></i>
+      إتمام الطلب عبر واتساب
+    </button>
+
+    <!-- Success State داخل المودال -->
+    <div id="modalSuccess" style="display:none;text-align:center;padding:20px 0;">
+      <div class="success-icon" style="margin-bottom:16px;"><i class="fas fa-check"></i></div>
+      <div class="success-title">تم استلام طلبك!</div>
+      <div class="success-sub" style="margin:10px 0 18px;">الآن أرسل الرسالة التلقائية على واتساب لتأكيد طلبك.</div>
+      <a href="#" id="modalWaLink" class="btn-primary" style="display:inline-flex;margin:0 auto 12px;" target="_blank">
+        <i class="fab fa-whatsapp"></i> تواصل على واتساب
+      </a>
+      <button onclick="closeOrderModal()" style="display:block;width:100%;margin-top:8px;background:transparent;border:1.5px dashed rgba(255,255,255,0.12);color:var(--text-muted);padding:12px;border-radius:var(--radius);font-size:14px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;">
+        <i class="fas fa-xmark" style="margin-left:6px;"></i> إغلاق
+      </button>
+    </div>
+  </div>
+</div>
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
@@ -1595,8 +1726,8 @@ window.handleSearchFocus = function() {
 window.pickSearchResult = function(serviceId) {
   document.getElementById('svcSearchInput').value = '';
   document.getElementById('searchDropdown').style.display = 'none';
-  document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  setTimeout(() => triggerPickerSelect(serviceId), 600);
+  const svc = servicesData.find(s => s.id === serviceId);
+  if (svc) openOrderModal(svc);
 }
 
 // إخفاء dropdown لما يضغط خارجه
@@ -1731,8 +1862,7 @@ function renderServiceCards(container) {
       </div>`;
 
     card.addEventListener('click', () => {
-      document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => triggerPickerSelect(service.id), 600);
+      openOrderModal(service);
     });
 
     container.appendChild(card);
@@ -1753,8 +1883,7 @@ function renderServiceCards(container) {
       <span class="service-badge"><i class="fas fa-circle-check"></i> متاح</span>
     </div>`;
   customCard.addEventListener('click', () => {
-    document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => triggerPickerSelect('custom'), 600);
+    openOrderModal({ id: 'custom', name: 'خدمة مخصصة', hasBranches: false, price: null, priceOnRequest: true, icon: 'sliders', iconUrl: null });
   });
   container.appendChild(customCard);
 }
@@ -2075,6 +2204,202 @@ function triggerPickerSelect(sid) {
   const item = document.querySelector(`#servicesPicker [data-sid="${sid}"]`);
   if (item) item.click();
 }
+
+// ─── Modal Logic ───
+let _modalService = null;
+let _modalBranchCode = null;
+let _modalBranchPrice = null;
+let _modalServiceName = null;
+
+window.openOrderModal = function(service) {
+  _modalService = service;
+  _modalBranchCode = null;
+  _modalBranchPrice = null;
+  _modalServiceName = service.name;
+
+  // أيقونة + اسم + سعر
+  const iconStyles2 = [
+    { bg: 'rgba(99,102,241,0.12)', color: '#a5b4fc' },
+    { bg: 'rgba(168,85,247,0.12)', color: '#c084fc' },
+    { bg: 'rgba(245,158,11,0.12)', color: '#fbbf24' },
+    { bg: 'rgba(16,185,129,0.12)', color: '#34d399' },
+    { bg: 'rgba(239,68,68,0.12)',  color: '#f87171' },
+    { bg: 'rgba(59,130,246,0.12)', color: '#60a5fa' },
+  ];
+  const idx = servicesData.findIndex(s => s.id === service.id);
+  const st = iconStyles2[(idx < 0 ? 5 : idx) % 6];
+  const iconCls = service.icon ? `fa-${service.icon}` : 'fa-cube';
+  const isImg = service.iconUrl && /^https?:\/\//.test(service.iconUrl);
+
+  const iconEl = document.getElementById('modalServiceIcon');
+  iconEl.style.background = st.bg;
+  iconEl.style.color = st.color;
+  iconEl.innerHTML = isImg
+    ? `<img src="${service.iconUrl}" style="width:28px;height:28px;object-fit:contain;border-radius:5px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><i class="fas ${iconCls}" style="display:none;"></i>`
+    : `<i class="fas ${iconCls}"></i>`;
+
+  document.getElementById('modalServiceName').textContent = service.name;
+
+  const priceEl = document.getElementById('modalServicePrice');
+  if (service.hasBranches && service.branches?.length) {
+    const minP = Math.min(...service.branches.map(b => Number(b.price) || 0));
+    priceEl.textContent = minP + '₪+';
+  } else if (service.priceOnRequest) {
+    priceEl.textContent = 'حسب الطلب';
+    priceEl.style.color = 'var(--text-muted)';
+  } else {
+    priceEl.textContent = (service.price || 0) + ' ₪';
+  }
+
+  // باقات
+  const branchArea = document.getElementById('modalBranchArea');
+  branchArea.innerHTML = '';
+  branchArea.style.display = 'none';
+  if (service.hasBranches && service.branches?.length) {
+    branchArea.style.display = 'block';
+    branchArea.innerHTML = `<div class="branch-panel" style="display:block;">
+      <div class="branch-label"><i class="fas fa-code-branch"></i> اختر الباقة:</div>
+      <div class="branch-grid" id="modalBranchGrid"></div>
+    </div>`;
+    const grid = document.getElementById('modalBranchGrid');
+    service.branches.forEach(branch => {
+      const bi = document.createElement('div');
+      bi.className = 'branch-item';
+      bi.innerHTML = `<div class="branch-name">${branch.name}</div><div class="branch-price">${branch.price} ₪</div>`;
+      bi.addEventListener('click', () => {
+        grid.querySelectorAll('.branch-item').forEach(b => b.classList.remove('selected'));
+        bi.classList.add('selected');
+        _modalBranchCode = String(branch.code);
+        _modalBranchPrice = branch.price;
+        _modalServiceName = `${service.name} - ${branch.name}`;
+        priceEl.textContent = branch.price + ' ₪';
+        priceEl.style.color = 'var(--accent)';
+      });
+      grid.appendChild(bi);
+    });
+  } else {
+    _modalBranchCode = service.code ? String(service.code) : '000000000';
+    _modalBranchPrice = service.price ?? null;
+  }
+
+  // إعادة تعيين الحقول والـ success
+  document.getElementById('modalSuccess').style.display = 'none';
+  document.getElementById('modalSubmitBtn').style.display = 'flex';
+  document.querySelector('.modal-box .form-row').style.display = 'grid';
+  document.querySelector('#modalNotes').closest('.form-group').style.display = 'block';
+  document.getElementById('modalServiceHeader').style.display = 'flex';
+  document.getElementById('modalSubmitBtn').innerHTML = '<i class="fab fa-whatsapp" style="font-size:18px;"></i> إتمام الطلب عبر واتساب';
+  document.getElementById('modalSubmitBtn').disabled = false;
+
+  // فتح المودال
+  document.getElementById('orderModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  trackVisitor('service_selected', { selectedService: service.name });
+
+  // sync الاسم والرقم المحفوظين
+  const sn = localStorage.getItem('_savedName');
+  const sp = localStorage.getItem('_savedPhone');
+  if (sn && !document.getElementById('modalName').value) document.getElementById('modalName').value = sn;
+  if (sp && !document.getElementById('modalPhone').value) document.getElementById('modalPhone').value = sp;
+}
+
+window.closeOrderModal = function() {
+  document.getElementById('orderModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+window.handleModalOverlayClick = function(e) {
+  if (e.target === document.getElementById('orderModal')) closeOrderModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeOrderModal();
+});
+
+document.getElementById('modalSubmitBtn').addEventListener('click', async () => {
+  if (checkCooldown()) {
+    trackVisitor('blocked_by_cooldown', {});
+    showToast("عذراً، يجب الانتظار لانتهاء العداد.");
+    return;
+  }
+
+  const nameEl  = document.getElementById('modalName');
+  const phoneEl = document.getElementById('modalPhone');
+  const notesEl = document.getElementById('modalNotes');
+  const name    = nameEl.value.trim();
+  let phone     = phoneEl.value.trim();
+  const notes   = notesEl.value.trim();
+
+  if (!name) { shake(nameEl); showToast("يرجى إدخال اسمك أولاً."); return; }
+  const nameRegex = /^[\p{L}\s]+$/u;
+  if (!nameRegex.test(name)) { shake(nameEl); showToast("حقل الاسم يجب أن يحتوي على حروف فقط."); return; }
+  if (name.length < 2) { shake(nameEl); showToast("يرجى إدخال اسم حقيقي من حرفين على الأقل."); return; }
+
+  if (!phone) { shake(phoneEl); showToast("يرجى إدخال رقم الواتساب."); return; }
+  const phoneRegex = /^(?:\+)?(97\d{10})$/;
+  const phoneMatch = phone.match(phoneRegex);
+  if (!phoneMatch) { shake(phoneEl); showToast("يرجى إدخال الرقم بصيغة صحيحة (يبدأ بـ 97 ويتكون من 12 رقم)."); return; }
+  phone = '+' + phoneMatch[1];
+
+  if (_modalService?.hasBranches && !_modalBranchCode) {
+    const grid = document.getElementById('modalBranchGrid');
+    if (grid) { grid.style.outline = '1.5px solid rgba(239,68,68,0.5)'; setTimeout(() => grid.style.outline = '', 2500); }
+    showToast("يرجى اختيار الباقة المناسبة.");
+    return;
+  }
+
+  const btn = document.getElementById('modalSubmitBtn');
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري الإرسال...';
+  btn.disabled = true;
+
+  const finalCode  = _modalBranchCode || '000000000';
+  const finalName  = _modalServiceName || 'خدمة مخصصة';
+  const finalPrice = _modalBranchPrice !== null && _modalBranchPrice !== undefined ? _modalBranchPrice : 'حسب الطلب';
+
+  try {
+    if (localStorage.getItem('_ownerMode') !== '1') {
+      await addDoc(collection(db, 'orders'), {
+        customerName: name, phone, serviceName: finalName,
+        serviceCode: finalCode, amount: finalPrice,
+        notes, status: 'pending', timestamp: serverTimestamp()
+      });
+    }
+
+    const templateParams = { customerName: name, phone, serviceName: finalName, serviceCode: finalCode, amount: finalPrice, notes: notes || 'لا يوجد' };
+    if (localStorage.getItem('_ownerMode') !== '1') {
+      try { await emailjs.send("service_0jdv5mg", "template_jzzcs3l", templateParams, "MQsv_SMY9admtTYbj"); }
+      catch(e1) { try { await emailjs.send("service_pzr8kyr", "template_d3x4n2y", templateParams, "p13GSw3y-jBZg_CkM"); } catch(e2) {} }
+    }
+
+    localStorage.setItem('_savedName', name);
+    localStorage.setItem('_savedPhone', phone);
+
+    const msg = `مرحبا بدي اطلب خدمة "${finalName}"\nكود الخدمة: ${finalCode}`;
+    const waURL = `https://wa.me/972566912007?text=${encodeURIComponent(msg)}`;
+
+    document.getElementById('modalWaLink').href = waURL;
+    btn.style.display = 'none';
+    document.querySelector('.modal-box .form-row').style.display = 'none';
+    document.querySelector('#modalNotes').closest('.form-group').style.display = 'none';
+    document.getElementById('modalServiceHeader').style.display = 'none';
+    document.getElementById('modalBranchArea').style.display = 'none';
+    document.querySelector('.form-title').style.display = 'none';
+    document.querySelector('.form-sub').style.display = 'none';
+    document.getElementById('modalSuccess').style.display = 'block';
+
+    trackVisitor('order_submitted', { serviceName: finalName, amount: finalPrice });
+    startCooldownTimer(COOLDOWN_MINUTES * 60 * 1000);
+    if (localStorage.getItem('_ownerMode') !== '1') {
+      setDoc(doc(db, 'deviceCooldowns', getCanvasFingerprint()), { lastOrderMs: Date.now() });
+    }
+    window.open(waURL, '_blank');
+
+  } catch(err) {
+    btn.innerHTML = '<i class="fab fa-whatsapp" style="font-size:18px;"></i> إتمام الطلب عبر واتساب';
+    btn.disabled = false;
+    showToast("حدث خطأ، يرجى المحاولة مجدداً.");
+  }
+});
 
 // ─── Submit Order ───
 document.getElementById('submitBtn').addEventListener('click', async () => {
