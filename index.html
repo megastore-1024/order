@@ -1014,7 +1014,7 @@ footer {
 
   /* Services Grid */
   .services-grid { grid-template-columns: 1fr; gap: 14px; }
-  .service-card { padding: 20px; border-radius: 18px; }
+  .service-card { padding: 20px 20px 42px; border-radius: 18px; }
   .service-card:hover { transform: none; }
   .service-icon { width: 46px; height: 46px; font-size: 19px; margin-bottom: 14px; }
   .service-name { font-size: 16px; }
@@ -1454,6 +1454,7 @@ window._hideLoader = function() {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
+  initializeFirestore,
   getFirestore,
   collection,
   getDocs,
@@ -1480,7 +1481,7 @@ const firebaseConfig = {
   appId: "1:535350206918:web:e98ed31054004a20c452c7"
 };
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
 // ─── State ───
 let servicesData = [];
@@ -1784,6 +1785,7 @@ function renderServiceCards(container) {
 
 // ─── Render Service Picker ───
 function renderServicePicker(container) {
+  if (!container) return;
   container.innerHTML = '';
 
   // Custom option FIRST
