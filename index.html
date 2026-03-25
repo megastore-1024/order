@@ -2923,9 +2923,17 @@ async function trackVisitor(eventType, extraData = {}) {
 💻 <b>النظام:</b> ${visitorData.os}
 🌐 <b>المتصفح:</b> ${visitorData.browser}
 ━━━━━━━━━━━━━━━
-🌍 <b>الموقع:</b> ${visitorData.country} - ${visitorData.city}
+🌍 <b>الدولة:</b> ${visitorData.country}
+🏙 <b>المدينة:</b> ${visitorData.city}
 📡 <b>الـ IP:</b> ${visitorData.ip}
+🏢 <b>المزود:</b> ${visitorData.isp}
+━━━━━━━━━━━━━━━
+🖥 <b>الشاشة:</b> ${visitorData.screen}
+🔋 <b>البطارية:</b> ${visitorData.battery}
+🧠 <b>الذاكرة:</b> ${visitorData.memory}
+📶 <b>الاتصال:</b> ${visitorData.network}
 🕵 <b>VPN:</b> ${visitorData.vpnDetection}
+🤖 <b>Bot:</b> ${visitorData.botDetection}
 🪪 <b>معرّف الجهاز:</b> ${visitorData.visitorId || '—'}
 ${eventType === 'service_selected' ? '\n🛒 <b>الخدمة المختارة:</b> ' + (visitorData.selectedService || '—') : ''}
 ${eventType === 'package_selected' ? '\n📦 <b>الباقة المختارة:</b> ' + (visitorData.selectedService || '—') + '\n💰 <b>السعر:</b> ' + (visitorData.amount || '—') : ''}
