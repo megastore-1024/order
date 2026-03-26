@@ -291,24 +291,29 @@ const progressFill = document.getElementById('progressFill');
 ringFill.style.strokeDasharray = circumference;
 ringFill.style.strokeDashoffset = 0;
 
+let _interval;
 function tick() {
   remaining--;
+  if (remaining <= 0) {
+    remaining = 0;
+    clearInterval(_interval);
+    countNum.textContent = '0';
+    secText.textContent  = '0';
+    ringFill.style.strokeDashoffset = circumference;
+    progressFill.style.width = '0%';
+    document.querySelector('.subtitle').innerHTML = 'جاري نقلك للموقع الجديد...';
+    window.location.href = 'https://69c57dcf088bfd14a21fc9d7--megastore1023.netlify.app/';
+    return;
+  }
   countNum.textContent = remaining;
   secText.textContent  = remaining;
-
   const ratio = remaining / TOTAL;
   ringFill.style.strokeDashoffset = circumference * (1 - ratio);
   progressFill.style.width = (ratio * 100) + '%';
-
-  if (remaining <= 0) {
-    window.location.href = 'https://69c57dcf088bfd14a21fc9d7--megastore1023.netlify.app/';
-  }
 }
-
-// ابدأ بعد ثانية
 setTimeout(() => {
   tick();
-  setInterval(tick, 1000);
+  _interval = setInterval(tick, 1000);
 }, 1000);
 </script>
 </body>
